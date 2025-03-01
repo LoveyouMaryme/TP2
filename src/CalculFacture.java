@@ -109,13 +109,13 @@ public class CalculFacture {
 
         if ((type == VEHICULE_ELECTRIQUE && (grandeur == VEHICULE_PETIT || grandeur == VEHICULE_INTERMEDIAIRE)) && nbJourLocation > NBR_JOUR_RABAIS) {
             rabaisApplique = prixLocation * POURCENTAGE_RABAIS_LOCATION;
-        }else{
+        } else {
             rabaisApplique = 0;
         }
         return rabaisApplique;
     }
 
-    public static float obtenirMontantLocation(int nbrJourLocation, float prixLocation, float rabais){
+    public static float obtenirMontantLocation(int nbrJourLocation, float prixLocation, float rabais) {
         float montantLocation;
 
         montantLocation = nbrJourLocation * prixLocation + rabais;
@@ -123,7 +123,7 @@ public class CalculFacture {
         return -1;
     }
 
-    public static float obtenirMontantAssurance(int nbrJourLocation, float prixAssurance){
+    public static float obtenirMontantAssurance(int nbrJourLocation, float prixAssurance) {
         float montantAssurance;
 
         montantAssurance = nbrJourLocation * prixAssurance;
@@ -131,7 +131,7 @@ public class CalculFacture {
         return montantAssurance;
     }
 
-    public static float obtenirSousTotal(float montantLocation, float montantAssurance){
+    public static float obtenirSousTotal(float montantLocation, float montantAssurance) {
         float sousTotal;
 
         sousTotal = montantLocation + montantAssurance;
@@ -139,20 +139,36 @@ public class CalculFacture {
         return sousTotal;
     }
 
-    public static float obtenirMontantTPS(float sousTotal){
-        float TPS;
+    public static float obtenirMontantTPS(float sousTotal) {
+        float montantTPS;
 
-        TPS = sousTotal * POURCENTAGE_TPS;
+        montantTPS = sousTotal * POURCENTAGE_TPS;
 
-        return TPS;
+        return montantTPS;
     }
 
-    public static float obtenirMontantTVQ(float sousTotal){
-        float TVQ;
+    public static float obtenirMontantTVQ(float sousTotal) {
+        float montantTVQ;
 
-        TVQ = sousTotal * POURCENTAGE_TVQ;
+        montantTVQ = sousTotal * POURCENTAGE_TVQ;
 
-        return TVQ;
+        return montantTVQ;
+    }
+
+    public static float obtenirMontantTotal(float sousTotal, float montantTPS, float montantTVQ) {
+        float montantTotal;
+
+        montantTotal = sousTotal + montantTPS + montantTVQ;
+
+        return montantTotal;
+    }
+
+    public static int obtenirNumeroFacture(int ancienNumeroFacture){
+        int numeroFacture;
+
+        numeroFacture = ancienNumeroFacture++ ;
+
+        return numeroFacture;
     }
 
 }
