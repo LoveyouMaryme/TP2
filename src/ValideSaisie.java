@@ -9,6 +9,9 @@ public class ValideSaisie {
     public static final byte POS_TRAIT_UNION_TEL = 9;
     public static final char VEHICULE_HYBRIDE = 'h';
     public static final char VEHICULE_ELECTRIQUE = 'e';
+    public static final char VEHICULE_PETIT = 'p';
+    public static final char VEHICULE_INTERMEDIAIRE = 'i';
+    public static final char VEHICULE_GRAND = 'g';
     public static final int MAXJOURSLOCATION = 30;
     public static final int MINJOURSLOCATION = 0;
     public static final char ASSURANCE_OUI = 'o';
@@ -111,10 +114,10 @@ public class ValideSaisie {
             System.out.print("(H ou h pour Hybride, et E ou e pour Électrique) :     ");
             choixType = Character.toLowerCase(Clavier.lireCharLn());
 
-            if (choixType != VEHICULE_HYBRIDE && choixType != VEHICULE_ELECTRIQUE) {
-                System.out.println("Le type de véhicule est invalide!");
-            } else {
+            if (choixType == VEHICULE_HYBRIDE || choixType == VEHICULE_ELECTRIQUE) {
                 valideTypeVehicule = true;
+            } else {
+                System.out.println("Le type de véhicule est invalide!");
             }
 
         } while (!valideTypeVehicule);
@@ -130,10 +133,10 @@ public class ValideSaisie {
             System.out.print("(P ou p pour Petit, I ou i pour Intermédiaire, et G ou g pour Grand) :    ");
             choixGrandeur = Character.toLowerCase(Clavier.lireCharLn());
 
-            if (choixGrandeur != VEHICULE_HYBRIDE && choixGrandeur != VEHICULE_ELECTRIQUE) {
-                System.out.println("La grandeur du véhicule est invalide!");
-            } else {
+            if (choixGrandeur == VEHICULE_PETIT || choixGrandeur == VEHICULE_INTERMEDIAIRE  || choixGrandeur == VEHICULE_GRAND ) {
                 valideGrandeurVehicule = true;
+            } else {
+                System.out.println("La grandeur du véhicule est invalide!");
             }
 
         } while (!valideGrandeurVehicule);
