@@ -114,6 +114,14 @@ public class CalculFacture {
         return -1;
     }
 
+    public static float obtenirMontantAssurance(int nbrJourLocation, float prixAssurance){
+        float montantAssurance;
+
+        montantAssurance = nbrJourLocation * prixAssurance;
+
+        return montantAssurance;
+    }
+
 }
 
 
