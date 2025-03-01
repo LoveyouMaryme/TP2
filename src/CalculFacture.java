@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
 public class CalculFacture {
     public static final char VEHICULE_HYBRIDE = 'h';
     public static final char VEHICULE_ELECTRIQUE = 'e';
@@ -21,6 +25,8 @@ public class CalculFacture {
     public static final float POURCENTAGE_TPS = 0.05f;
     public static final float POURCENTAGE_TVQ = 0.09975f;
     public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
+    public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
+
 
     public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
@@ -163,13 +169,31 @@ public class CalculFacture {
         return montantTotal;
     }
 
-    public static int obtenirNumeroFacture(int ancienNumeroFacture){
+    public static int obtenirNumeroFacture(int ancienNumeroFacture) {
         int numeroFacture;
 
-        numeroFacture = ancienNumeroFacture++ ;
+        numeroFacture = ancienNumeroFacture++;
 
         return numeroFacture;
     }
+
+    private static String obtenirTempsDebutLocation(LocalDateTime tempsMaintenant) {
+        String tempsDebutLocation;
+
+        tempsDebutLocation = tempsMaintenant.plusHours(3).format(FORMATTER);
+
+        return tempsDebutLocation;
+
+    }
+
+    private static String obtenirTempsFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation){
+        String tempsFinLocation;
+
+        tempsFinLocation = tempsMaintenant.plusHours(3).plusDays(nbrJourLocation).format(FORMATTER);
+
+        return tempsFinLocation;
+    }
+
 
 }
 
