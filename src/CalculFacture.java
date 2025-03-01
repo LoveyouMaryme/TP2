@@ -17,6 +17,8 @@ public class CalculFacture {
     public static final float ASSURANCE_ELECTRIQUE_INTERMEDIAIRE = 12.75f;
     public static final float ASSURANCE_ELECTRIQUE_GRAND = 13.25f;
     public static final int NBR_JOUR_RABAIS = 15;
+    public static final char ASSURANCE_OUI = 'o';
+    public static final char ASSURANCE_NON = 'n';
     public static final float PERCENTAGE_TPS = 0.05f;
     public static final float PERCENTAGE_TVQ = 0.09975f;
     public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
@@ -71,27 +73,35 @@ public class CalculFacture {
         return -1;
     }
 
-    public static float ObtenirPrixAssurance(char type, char grandeur) {
-        if (type == VEHICULE_HYBRIDE) {
-            if (grandeur == VEHICULE_PETIT) {
-                return ASSURANCE_HYBRIDE_PETIT;
-            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return ASSURANCE_HYBRIDE_INTERMEDIAIRE;
-            } else if (grandeur == VEHICULE_GRAND) {
-                return ASSURANCE_HYBRIDE_GRAND;
-            }
+    public static float ObtenirPrixAssurance(char type, char grandeur, char choixAssurance) {
 
-        } else {
-            if (type == VEHICULE_ELECTRIQUE) {
+        if (choixAssurance == ASSURANCE_OUI) {
+
+
+            if (type == VEHICULE_HYBRIDE) {
                 if (grandeur == VEHICULE_PETIT) {
-                    return ASSURANCE_ELECTRIQUE_PETIT;
+                    return ASSURANCE_HYBRIDE_PETIT;
                 } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                    return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
+                    return ASSURANCE_HYBRIDE_INTERMEDIAIRE;
                 } else if (grandeur == VEHICULE_GRAND) {
-                    return ASSURANCE_ELECTRIQUE_GRAND;
+                    return ASSURANCE_HYBRIDE_GRAND;
+                }
+
+            } else {
+                if (type == VEHICULE_ELECTRIQUE) {
+                    if (grandeur == VEHICULE_PETIT) {
+                        return ASSURANCE_ELECTRIQUE_PETIT;
+                    } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                        return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
+                    } else if (grandeur == VEHICULE_GRAND) {
+                        return ASSURANCE_ELECTRIQUE_GRAND;
+                    }
                 }
             }
+        } else {
+            return 0;
         }
+
         return -1;
     }
 
