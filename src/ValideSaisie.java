@@ -7,11 +7,6 @@ public class ValideSaisie {
     public static final byte POS_PARANTHESE_OUVRANTE_TEL = 0;
     public static final byte POS_PARANTHESE_FERMANTE_TEL = 4;
     public static final byte POS_TRAIT_UNION_TEL = 9;
-    public static final int MAX_CHAR_PERMIS = 15;
-    public static final char DEBUT_PERMIS = 'A';
-    public static final byte POS_LETTRE_PERMIS = 0;
-    public static final int POS_TRAIT_UNION_TEL_UN = 5;
-    public static final int POS_TRAIT_UNION_TEL_DEUX = 12;
     public static final char VEHICULE_HYBRIDE = 'h';
     public static final char VEHICULE_ELECTRIQUE = 'e';
     public static final int MAXJOURSLOCATION = 30;
@@ -24,7 +19,7 @@ public class ValideSaisie {
     public static final char MC_CARTE_CREDIT = 'm';
 
 
-    public static void prenomLocataire() {
+    public static String prenomLocataire() {
         String prenomLocataire;
         boolean validePrenom = false;
 
@@ -40,9 +35,10 @@ public class ValideSaisie {
 
 
         } while (!validePrenom);
+        return prenomLocataire;
     }
 
-    public static void nomLocataire() {
+    public static String nomLocataire() {
         String nomLocataire;
         boolean valideNom = false;
 
@@ -57,9 +53,11 @@ public class ValideSaisie {
             }
 
         } while (!valideNom);
+
+        return nomLocataire;
     }
 
-    public static void telephone() {
+    public static String telephone() {
         String telephone;
         boolean valideTelephone = false;
 
@@ -81,9 +79,11 @@ public class ValideSaisie {
 
         } while (!valideTelephone);
 
+        return telephone;
+
     }
 
-    public static void permisConduite() {
+    public static String permisConduite() {
         String numeroPermis;
         boolean validePermis = false;
 
@@ -93,24 +93,16 @@ public class ValideSaisie {
 
 
             if (numeroPermis.matches("[A-Za-z][0-9]{1,4}-[0-9]{1,6}-[0-9]{1,2}")) {
-
-//                (numeroPermis.length() == MAX_CHAR_PERMIS
-//                        && (numeroPermis.charAt(POS_LETTRE_PERMIS)  >= 'A' && numeroPermis.charAt(POS_LETTRE_PERMIS) <= 'Z' ||
-//                            numeroPermis.charAt(POS_LETTRE_PERMIS)  >= 'a' && numeroPermis.charAt(POS_LETTRE_PERMIS) <= 'z')
-//                        && (numero)
-//                        && numeroPermis.charAt(POS_TRAIT_UNION_TEL_UN) == TRAIT_UNION
-//                        && numeroPermis.charAt(POS_TRAIT_UNION_TEL_DEUX) == TRAIT_UNION) {
-
                 validePermis = true;
             } else {
                 System.out.println("Le numéro de téléphone est invalide!");
             }
 
         } while (!validePermis);
-
+        return permisConduite();
     }
 
-    public static void typeVehicule() {
+    public static char typeVehicule() {
         char choixType;
         boolean valideTypeVehicule = false;
 
@@ -126,10 +118,10 @@ public class ValideSaisie {
             }
 
         } while (!valideTypeVehicule);
-
+        return choixType;
     }
 
-    public static void grandeurVehicule() {
+    public static char grandeurVehicule() {
         char choixGrandeur;
         boolean valideGrandeurVehicule = false;
 
@@ -145,11 +137,11 @@ public class ValideSaisie {
             }
 
         } while (!valideGrandeurVehicule);
-
+        return choixGrandeur;
 
     }
 
-    public static void jourLocation() {
+    public static int jourLocation() {
         int nbrJour;
         boolean valideNbrJour = false;
 
@@ -166,9 +158,11 @@ public class ValideSaisie {
 
 
         } while (!valideNbrJour);
+
+        return nbrJour;
     }
 
-    public static void carteCredit() {
+    public static char carteCredit() {
 
         char choixCarteCredit;
         boolean valideCarteCredit = false;
@@ -185,10 +179,10 @@ public class ValideSaisie {
             }
 
         } while (!valideCarteCredit);
-
+        return choixCarteCredit;
     }
 
-    public static void modePaiement() {
+    public static char modePaiement() {
         char choixPaiement;
         boolean valideCarteCredit = false;
 
@@ -204,10 +198,10 @@ public class ValideSaisie {
             }
 
         } while (!valideCarteCredit);
-
+        return choixPaiement;
     }
 
-    public static void numeroCarteCredit() {
+    public static String numeroCarteCredit() {
         String numeroCarte;
         boolean valideCarte = false;
 
@@ -223,10 +217,10 @@ public class ValideSaisie {
             }
 
         } while (!valideCarte);
-
+        return numeroCarte;
     }
 
-    public static void assurance() {
+    public static char assurance() {
         char choixAssurance;
         boolean valideChoixAssurance = false;
 
@@ -242,7 +236,7 @@ public class ValideSaisie {
             }
 
         } while (!valideChoixAssurance);
-
+        return choixAssurance;
     }
 }
 

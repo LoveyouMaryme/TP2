@@ -15,7 +15,7 @@ public class Menu {
         System.out.printf("%s\n%s\n%s\n%s\n", CHOIX_UN, CHOIX_DEUX, CHOIX_TROIS, CHOIX_QUATRE);
 
     }
-    public static void choix() {
+    public static byte choix() {
 
         byte choixOption;
         do {
@@ -28,6 +28,8 @@ public class Menu {
             }
 
         } while (choixOption < 1 | choixOption > 4);
+
+        return choixOption;
     }
 
     //mine
