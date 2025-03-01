@@ -18,9 +18,8 @@ public class CalculFacture {
     public static final float ASSURANCE_ELECTRIQUE_GRAND = 13.25f;
     public static final int NBR_JOUR_RABAIS = 15;
     public static final char ASSURANCE_OUI = 'o';
-    public static final char ASSURANCE_NON = 'n';
-    public static final float PERCENTAGE_TPS = 0.05f;
-    public static final float PERCENTAGE_TVQ = 0.09975f;
+    public static final float POURCENTAGE_TPS = 0.05f;
+    public static final float POURCENTAGE_TVQ = 0.09975f;
     public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
 
     public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
@@ -130,6 +129,30 @@ public class CalculFacture {
         montantAssurance = nbrJourLocation * prixAssurance;
 
         return montantAssurance;
+    }
+
+    public static float obtenirSousTotal(float montantLocation, float montantAssurance){
+        float sousTotal;
+
+        sousTotal = montantLocation + montantAssurance;
+
+        return sousTotal;
+    }
+
+    public static float obtenirMontantTPS(float sousTotal){
+        float TPS;
+
+        TPS = sousTotal * POURCENTAGE_TPS;
+
+        return TPS;
+    }
+
+    public static float obtenirMontantTVQ(float sousTotal){
+        float TVQ;
+
+        TVQ = sousTotal * POURCENTAGE_TVQ;
+
+        return TVQ;
     }
 
 }
