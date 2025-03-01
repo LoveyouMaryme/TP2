@@ -16,8 +16,12 @@ public class CalculFacture {
     public static final float ASSURANCE_ELECTRIQUE_PETIT = 12.50f;
     public static final float ASSURANCE_ELECTRIQUE_INTERMEDIAIRE = 12.75f;
     public static final float ASSURANCE_ELECTRIQUE_GRAND = 13.25f;
+    public static final int NBR_JOUR_RABAIS = 15;
+    public static final float PERCENTAGE_TPS = 0.05f;
+    public static final float PERCENTAGE_TVQ = 0.09975f;
+    public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
 
-    public static int voituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
+    public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
 
         if (type == VEHICULE_HYBRIDE) {
@@ -43,7 +47,7 @@ public class CalculFacture {
         return -1;
     }
 
-    public static float prixLocationTypeGrandeur(char type, char grandeur) {
+    public static float obtenirPrixLocation(char type, char grandeur) {
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
                 return PRIX_HYBRIDE_PETIT;
@@ -67,7 +71,7 @@ public class CalculFacture {
         return -1;
     }
 
-    public static float prixAssuranceTypeGrandeur(char type, char grandeur) {
+    public static float ObtenirPrixAssurance(char type, char grandeur) {
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
                 return ASSURANCE_HYBRIDE_PETIT;
@@ -89,6 +93,17 @@ public class CalculFacture {
             }
         }
         return -1;
+    }
+
+    public static float obtenirRabais(float prixLocation, char type, char grandeur, int nbJourLocation) {
+        float rabaisApplique;
+
+        if ((type == VEHICULE_ELECTRIQUE && (grandeur == VEHICULE_PETIT || grandeur == VEHICULE_INTERMEDIAIRE)) && nbJourLocation > NBR_JOUR_RABAIS) {
+            rabaisApplique = prixLocation * POURCENTAGE_RABAIS_LOCATION;
+        }else{
+            rabaisApplique = 0;
+        }
+        return rabaisApplique;
     }
 
 }
