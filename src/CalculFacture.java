@@ -10,6 +10,12 @@ public class CalculFacture {
     public static final float PRIX_ELECTRIQUE_PETIT = 45.50f;
     public static final float PRIX_ELECTRIQUE_INTERMEDIAIRE = 50.50f;
     public static final float PRIX_ELECTRIQUE_GRAND = 55.25f;
+    public static final float ASSURANCE_HYBRIDE_PETIT = 13.50f;
+    public static final float ASSURANCE_HYBRIDE_INTERMEDIAIRE = 14.50f;
+    public static final float ASSURANCE_HYBRIDE_GRAND = 15.50f;
+    public static final float ASSURANCE_ELECTRIQUE_PETIT = 12.50f;
+    public static final float ASSURANCE_ELECTRIQUE_INTERMEDIAIRE = 12.75f;
+    public static final float ASSURANCE_ELECTRIQUE_GRAND = 13.25f;
 
     public static int voituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
@@ -60,6 +66,31 @@ public class CalculFacture {
         }
         return -1;
     }
+
+    public static float prixAssuranceTypeGrandeur(char type, char grandeur) {
+        if (type == VEHICULE_HYBRIDE) {
+            if (grandeur == VEHICULE_PETIT) {
+                return ASSURANCE_HYBRIDE_PETIT;
+            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                return ASSURANCE_HYBRIDE_INTERMEDIAIRE;
+            } else if (grandeur == VEHICULE_GRAND) {
+                return ASSURANCE_HYBRIDE_GRAND;
+            }
+
+        } else {
+            if (type == VEHICULE_ELECTRIQUE) {
+                if (grandeur == VEHICULE_PETIT) {
+                    return ASSURANCE_ELECTRIQUE_PETIT;
+                } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                    return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
+                } else if (grandeur == VEHICULE_GRAND) {
+                    return ASSURANCE_ELECTRIQUE_GRAND;
+                }
+            }
+        }
+        return -1;
+    }
+
 }
 
 
