@@ -106,6 +106,14 @@ public class CalculFacture {
         return rabaisApplique;
     }
 
+    public static float obtenirMontantLocation(int nbrJourLocation, float prixLocation, float rabais){
+        float montantLocation;
+
+        montantLocation = nbrJourLocation * prixLocation + rabais;
+
+        return -1;
+    }
+
 }
 
 
