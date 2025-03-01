@@ -186,12 +186,21 @@ public class CalculFacture {
 
     }
 
-    private static String obtenirTempsFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation){
+    private static String obtenirTempsFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation) {
         String tempsFinLocation;
 
         tempsFinLocation = tempsMaintenant.plusHours(3).plusDays(nbrJourLocation).format(FORMATTER);
 
         return tempsFinLocation;
+    }
+
+    public static int incrementerVehiculeLoue(char typeChoisi, char typeCible, char grandeurChoisi, char grandeurCible, int nbrVehiculeChoisi) {
+
+        if (typeChoisi == typeCible && grandeurChoisi == grandeurCible) {
+            return nbrVehiculeChoisi++;
+        } else {
+            return nbrVehiculeChoisi;
+        }
     }
 
 
