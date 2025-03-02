@@ -58,6 +58,13 @@ public class Main {
     public static final char MC_CARTE_CREDIT = 'm';
     public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
 
+    static int nbDisponiblesHP;
+    static int nbDisponiblesHI;
+    static int nbDisponiblesHG;
+    static int nbDisponiblesEP;
+    static int nbDisponiblesEI;
+    static int nbDisponiblesEG;
+
     public static void affichageBievenue() {
         final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
         final String MESSAGE_BIENVENUE = "Bienvenue dans le système de facturation de " + NOM_ENTREPRISE;
@@ -95,11 +102,10 @@ public class Main {
     }
 
     //mine
-    public static void entete() {
+    public static void enteteInformationEntreprise() {
         final String ENCADRE_SOUS_TIRE = "-----------------------------------------------------------";
         final String ADRESSE_ENTREPRISE = "1500 rue Matata, Hakuna, Québec Y0Z 6Y7";
         final String TELEPHONE_ENTREPRISE = "438 222-1111";
-        final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
         final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
 
         LocalDateTime now = LocalDateTime.now();
@@ -112,6 +118,20 @@ public class Main {
         System.out.println("Date et Heure : " + dateNowFormate);
         System.out.println(ENCADRE_SOUS_TIRE);
     }
+
+    //mine
+    public static void enteteNombreVehicule(boolean disponible) {
+
+        if (disponible == true) {
+            System.out.println("\n" + MESSAGE_NOMBRE_VEHICULE_INVENTAIRE);
+        } else {
+            System.out.println("\n" + MESSAGE_NOMBRE_VEHICULE_LOUEE);
+        }
+        System.out.println("*************************************************");
+        System.out.println("Grandeur          Hybride      Électrique");
+        System.out.println("****************************************");
+    }
+
 
     public static String prenomLocataire() {
         String prenomLocataire;
@@ -534,11 +554,20 @@ public class Main {
         return description;
     }
 
-    public static void afficherVehiculeDisponible( int nbLouesHP, int nbLouesHI, int nbLouesHG,  int nbLouesEP,  int nbLouesEI, int nbLouesEG){
-        System.out.printf("Petit %15d %15d", nbLouesHP, nbLouesEP);
-        System.out.printf("\nIntermédiaire %7d %15d", nbLouesHI, nbLouesEI);
-        System.out.printf("\nGrand %15d %15d\n\n", nbLouesHG, nbLouesEG);
+    public static void afficherVehiculeDisponible(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
+
+        nbDisponiblesHP = nbDisponiblesHP - nbLouesHP;
+        nbDisponiblesHI = nbDisponiblesHI - nbLouesHI;
+        nbDisponiblesHG = nbDisponiblesHG - nbLouesHG;
+        nbDisponiblesEP = nbDisponiblesEP - nbLouesEP;
+        nbDisponiblesEI = nbDisponiblesEI - nbLouesEI;
+        nbDisponiblesEG = nbDisponiblesEG - nbLouesEG;
+
+        System.out.printf("Petit %15d %15d", nbDisponiblesHP, nbDisponiblesEP);
+        System.out.printf("\nIntermédiaire %7d %15d", nbDisponiblesHI, nbDisponiblesEI);
+        System.out.printf("\nGrand %15d %15d\n\n", nbDisponiblesHG, nbDisponiblesEG);
         System.out.println(ENCADRE_SOUS_TIRE);
+
     }
 
     public static void afficherFacture(int numeroFacture,
@@ -561,11 +590,11 @@ public class Main {
                                        float montantTPS,
                                        float montantTVQ,
                                        float montantTotalFacture
-                                       ){
+    ) {
         System.out.println("Facture No :    " + numeroFacture);
         System.out.println(ENCADRE_SOUS_TIRE);
 
-        System.out.println("\nPrénom et nom : " +  prenomLocataire + " " + nomLocataire);
+        System.out.println("\nPrénom et nom : " + prenomLocataire + " " + nomLocataire);
         System.out.println("Téléphone : " + telephoneLocataire);
         System.out.println("Permis de conduire : " + permisLocataire);
 
@@ -595,12 +624,22 @@ public class Main {
 
     }
 
-
+    public static void afficherVehiculeLoues(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
+        System.out.printf("Petit %15d %15d", nbLouesHP, nbLouesEP);
+        System.out.printf("\nIntermédiaire %7d %15d", nbLouesHI, nbLouesEI);
+        System.out.printf("\nGrand %15d %15d\n\n", nbLouesHG, nbLouesEG);
+        System.out.println(ENCADRE_SOUS_TIRE);
+    }
 
 
     public static void main(String[] args) {
         byte choixMenu;
-
+        nbDisponiblesHP = 12;
+        nbDisponiblesHI = 10;
+        nbDisponiblesHG = 3;
+        nbDisponiblesEP = 11;
+        nbDisponiblesEI = 9;
+        nbDisponiblesEG = 5;
 
         affichageBievenue();
         affichage();
@@ -611,14 +650,21 @@ public class Main {
             switch (choixMenu) {
                 // Afficher l'inventaire des voitures disponibles
                 case 1:
-                    System.out.println("1");
+                    enteteInformationEntreprise();
+                    enteteNombreVehicule(true);
+                    afficherVehiculeDisponible(0, 0, 0, 0, 0, 0);
+                    choix();
                     break;
                 // Louer une voiture selon sa taille, son type, sa disponibilité et valider les modalités de paiement
                 case 2:
                     System.out.println("2");
+                    choix();
                     break;
                 case 3:
-                    System.out.println("3");
+                    enteteInformationEntreprise();
+                    enteteNombreVehicule(false);
+                    afficherVehiculeLoues(0, 0, 0, 0, 0, 0);
+                    choix();
                     break;
                 // Quitter le programme
                 case 4:
