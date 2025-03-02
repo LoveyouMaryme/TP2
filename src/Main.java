@@ -92,11 +92,15 @@ public class Main {
             choixOption = Clavier.lireByte();
 
             if (choixOption < 1 | choixOption > 4) {
-                System.out.println("\nL’option choisie est invalide! !\n");
+
+                System.out.println();
+                System.out.println("L’option choisie est invalide! !");
                 affichage();
             }
 
         } while (choixOption < 1 | choixOption > 4);
+
+        System.out.println();
 
         return choixOption;
     }
@@ -141,11 +145,15 @@ public class Main {
             System.out.print("Entrez le prénom du locataire (entre 2 et 30 caractères inclusivement):");
             prenomLocataire = Clavier.lireString().trim();
 
+
             if (prenomLocataire.length() < 2 || prenomLocataire.length() > 30) {
+                System.out.println();
                 System.out.println("Le prénom est invalide!");
             } else {
                 validePrenom = true;
             }
+
+            System.out.println();
 
 
         } while (!validePrenom);
@@ -160,11 +168,15 @@ public class Main {
             System.out.print("Entrez le nom du locataire (entre 2 et 30 caractères inclusivement):");
             nomLocataire = Clavier.lireString().trim();
 
+
             if (nomLocataire.length() < 2 || nomLocataire.length() > 30) {
+                System.out.println();
                 System.out.println("Le nom est invalide!");
             } else {
                 valideNom = true;
             }
+
+            System.out.println();
 
         } while (!valideNom);
 
@@ -176,8 +188,9 @@ public class Main {
         boolean valideTelephone = false;
 
         do {
-            System.out.println("Entrez le numéro de téléphone du locataire (Exemple : (514) 784-6589):");
+            System.out.print("Entrez le numéro de téléphone du locataire (Exemple : (514) 784-6589):");
             telephone = Clavier.lireString().trim();
+
 
 
             if (telephone.length() == MAX_CHAR_TELEPHONE
@@ -187,8 +200,11 @@ public class Main {
 
                 valideTelephone = true;
             } else {
+                System.out.println();
                 System.out.println("Le numéro de téléphone est invalide!");
             }
+
+            System.out.println();
 
 
         } while (!valideTelephone);
@@ -197,23 +213,27 @@ public class Main {
 
     }
 
-    public static String permisConduite() {
+    public static String saisiPermisConduite() {
         String numeroPermis;
         boolean validePermis = false;
 
         do {
-            System.out.println("Entrez le numéro de permis de conduire du locataire (Exemple : D1234-567891-23): L153117127408");
+            System.out.print("Entrez le numéro de permis de conduire du locataire (Exemple : D1234-567891-23): L153117127408");
             numeroPermis = Clavier.lireString().trim();
+
 
 
             if (numeroPermis.matches("[A-Za-z][0-9]{1,4}-[0-9]{1,6}-[0-9]{1,2}")) {
                 validePermis = true;
             } else {
+                System.out.println();
                 System.out.println("Le numéro de téléphone est invalide!");
             }
 
+            System.out.println();
+
         } while (!validePermis);
-        return permisConduite();
+        return saisiPermisConduite();
     }
 
     public static char saisiTypeVehicule() {
@@ -221,15 +241,18 @@ public class Main {
         boolean valideTypeVehicule = false;
 
         do {
-            System.out.println("\nEntrez le type du véhicule à louer");
-            System.out.print("(H ou h pour Hybride, et E ou e pour Électrique) :     ");
+            System.out.print("Entrez le type du véhicule à louer");
+            System.out.print("(H ou h pour Hybride, et E ou e pour Électrique) : ");
             choixType = Character.toLowerCase(Clavier.lireCharLn());
 
             if (choixType == VEHICULE_HYBRIDE || choixType == VEHICULE_ELECTRIQUE) {
                 valideTypeVehicule = true;
             } else {
+                System.out.println();
                 System.out.println("Le type de véhicule est invalide!");
             }
+
+            System.out.println();
 
         } while (!valideTypeVehicule);
         return choixType;
@@ -240,15 +263,18 @@ public class Main {
         boolean valideGrandeurVehicule = false;
 
         do {
-            System.out.println("\nEntrez la grandeur du véhicule à louer");
+            System.out.print("Entrez la grandeur du véhicule à louer");
             System.out.print("(P ou p pour Petit, I ou i pour Intermédiaire, et G ou g pour Grand) :    ");
             choixGrandeur = Character.toLowerCase(Clavier.lireCharLn());
 
             if (choixGrandeur == VEHICULE_PETIT || choixGrandeur == VEHICULE_INTERMEDIAIRE || choixGrandeur == VEHICULE_GRAND) {
                 valideGrandeurVehicule = true;
             } else {
+                System.out.println();
                 System.out.println("La grandeur du véhicule est invalide!");
             }
+
+            System.out.println();
 
         } while (!valideGrandeurVehicule);
         return choixGrandeur;
@@ -260,16 +286,17 @@ public class Main {
         boolean valideNbrJour = false;
 
         do {
-            System.out.println("Entrez le nombre de jours de location");
+            System.out.print("Entrez le nombre de jours de location");
             System.out.print("(supérieur à 0 et inférieur ou égal à 30) :    ");
             nbrJour = Clavier.lireInt();
 
             if (nbrJour <= MINJOURSLOCATION || nbrJour >= MAXJOURSLOCATION) {
+                System.out.println();
                 System.out.println("Le nombre de jours de location est invalide!");
             } else {
                 valideNbrJour = true;
             }
-
+            System.out.println();
 
         } while (!valideNbrJour);
 
@@ -282,15 +309,18 @@ public class Main {
         boolean valideCarteCredit = false;
 
         do {
-            System.out.println("\nEntrez le type de la carte de crédit");
+            System.out.print("Entrez le type de la carte de crédit");
             System.out.print("(V ou v pour Visa, et M ou m pour MasterCard): ");
             choixCarteCredit = Character.toLowerCase(Clavier.lireCharLn());
 
             if (choixCarteCredit != VISA_CARTE_CREDIT && choixCarteCredit != MC_CARTE_CREDIT) {
+                System.out.println();
                 System.out.println("Le type de la carte de crédit est invalide!");
             } else {
                 valideCarteCredit = true;
             }
+
+            System.out.println();
 
         } while (!valideCarteCredit);
         return choixCarteCredit;
@@ -301,15 +331,18 @@ public class Main {
         boolean valideCarteCredit = false;
 
         do {
-            System.out.println("\nEntrez le mode de paiement");
+            System.out.print("Entrez le mode de paiement");
             System.out.print("(D ou d pour Débit, C ou c pour Crédit): ");
             choixPaiement = Character.toLowerCase(Clavier.lireCharLn());
 
             if (choixPaiement != CARTE_DEBIT && choixPaiement != CARTE_CREDIT) {
+                System.out.println();
                 System.out.println("Le mode de paiement est invalide!");
             } else {
                 valideCarteCredit = true;
             }
+
+            System.out.println();
 
         } while (!valideCarteCredit);
         return choixPaiement;
@@ -320,15 +353,18 @@ public class Main {
         boolean valideCarte = false;
 
         do {
-            System.out.println(" Entrez le numéro de la carte de crédit (Exemple : 1234 5678 9123 4567) :");
+            System.out.print("Entrez le numéro de la carte de crédit (Exemple : 1234 5678 9123 4567) :");
             numeroCarte = Clavier.lireString().trim();
 
 
             if (numeroCarte.matches("[0-9]{1,4} [0-9]{1,4} [0-9]{1,4} [0-9]{1,4}")) {
                 valideCarte = true;
             } else {
+                System.out.println();
                 System.out.println("Le numéro de la carte de crédit est invalide!");
             }
+
+            System.out.println();
 
         } while (!valideCarte);
         return numeroCarte;
@@ -339,15 +375,18 @@ public class Main {
         boolean valideChoixAssurance = false;
 
         do {
-            System.out.println("\nDésirez-vous prendre l'assurance");
+            System.out.print("Désirez-vous prendre l'assurance");
             System.out.print("(O ou o pour Oui, N ou n pour Non) ? :    ");
             choixAssurance = Character.toLowerCase(Clavier.lireCharLn());
 
             if (choixAssurance != ASSURANCE_OUI && choixAssurance != ASSURANCE_NON) {
+                System.out.println();
                 System.out.println("La réponse est invalide!");
             } else {
                 valideChoixAssurance = true;
             }
+
+            System.out.println();
 
         } while (!valideChoixAssurance);
         return choixAssurance;
@@ -403,7 +442,7 @@ public class Main {
         }
     }
 
-    public static float ObtenirPrixAssurance(char type, char grandeur, char choixAssurance) {
+    public static float obtenirPrixAssurance(char type, char grandeur, char choixAssurance) {
 
         if (choixAssurance == ASSURANCE_OUI) {
 
@@ -573,8 +612,8 @@ public class Main {
                                        String nomLocataire,
                                        String telephoneLocataire,
                                        String permisLocataire,
-                                       String typeVehicule,
-                                       String grandeurVehicule,
+                                       char typeVehicule,
+                                       char grandeurVehicule,
                                        char modePaiement,
                                        char typeCarteCredit,
                                        String numeroCarteCredit,
@@ -641,7 +680,6 @@ public class Main {
             vehiculeEstDisponible = true;
 
 
-
         }
         return vehiculeEstDisponible;
     }
@@ -674,6 +712,23 @@ public class Main {
         int jourLocation;
         String prenomLocataire;
         String nomLocataire;
+        String telephoneLocataire;
+        String permisLocataire;
+        char modePaiementLocataire;
+        char carteCreditLocataire;
+        String numeroCarteLocataire;
+        char choixAssuranceLocataire;
+        int numeroFacture = 0;
+        float prixLocationParJour;
+        float prixAssuranceParJour;
+        float rabaisLocation;
+        float montantLocation;
+        float montantAssurance;
+        float sousTotalLocation;
+        float montantTPSLocation;
+        float montantTVQLocation;
+        float montantTotalLocation;
+
 
         boolean enterIsPressed = false;
 
@@ -715,6 +770,51 @@ public class Main {
                         jourLocation = saisiJourLocation();
                         prenomLocataire = saisiPrenomLocataire();
                         nomLocataire = saisiNomLocataire();
+                        telephoneLocataire = saisiTelephone();
+                        permisLocataire = saisiPermisConduite();
+                        modePaiementLocataire = saisiModePaiement();
+                        carteCreditLocataire = saisiCarteCredit();
+
+
+                        if (modePaiementLocataire == CARTE_CREDIT) {
+                            numeroCarteLocataire = saisiNumeroCarteCredit();
+                        } else {
+                            numeroCarteLocataire = "";
+                        }
+
+                        choixAssuranceLocataire = saisiAssurance();
+                        prixLocationParJour = obtenirPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
+                        prixAssuranceParJour = obtenirPrixAssurance(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
+                        rabaisLocation = obtenirRabais(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
+                        montantLocation = obtenirMontantLocation(jourLocation, prixLocationParJour, rabaisLocation);
+                        montantAssurance = obtenirMontantAssurance(jourLocation, prixAssuranceParJour);
+                        sousTotalLocation = obtenirSousTotal(montantLocation, montantAssurance);
+                        montantTPSLocation = obtenirMontantTPS(sousTotalLocation);
+                        montantTVQLocation = obtenirMontantTVQ(sousTotalLocation);
+                        montantTotalLocation = obtenirMontantTotal(sousTotalLocation, montantTPSLocation, montantTVQLocation);
+
+
+                        afficherFacture(numeroFacture,
+                                prenomLocataire,
+                                nomLocataire,
+                                telephoneLocataire,
+                                permisLocataire,
+                                typeVehiculeChoisi,
+                                grandeurVehiculeChoisi,
+                                modePaiementLocataire,
+                                carteCreditLocataire,
+                                numeroCarteLocataire,
+                                jourLocation,
+                                prixLocationParJour,
+                                prixAssuranceParJour,
+                                rabaisLocation,
+                                montantLocation,
+                                montantAssurance,
+                                sousTotalLocation,
+                                montantTPSLocation,
+                                montantTVQLocation,
+                                montantTotalLocation
+                        );
                         break;
                     case 3:
                         enteteInformationEntreprise();
