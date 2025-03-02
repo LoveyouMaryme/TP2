@@ -5,10 +5,21 @@ import java.time.format.DateTimeFormatter;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static final String MESSAGE_MENU_CHOIX = "*** Menu de choix ***";
+    public static final String MESSAGE_RABAIS_LOCATION = "Rabais sur le prix de la location";
+    public static final String MESSAGE_MONTANT_LOCATION_SOUS_TOTAL = "Montant de la location";
+    public static final String MESSAGE_MONTANT_ASSURANCE = "Montant de l'assurance";
+    public static final String MESSAGE_NOMBRE_VEHICULE_INVENTAIRE = "Nombre de véhicules disponibles dans l'inventaire";
+    public static final String MESSAGE_NOMBRE_VEHICULE_LOUEE = "Nombre de véhicules loués par type et par catégorie";
+    public static final String MESSAGE_SOUS_TOTAL = "Sous-total";
+    public static final String MESSAGE_MONTANT_TPS = "Montant TPS";
+    public static final String MESSAGE_MONTANT_TVQ = "Montant TVQ";
+    public static final String MESSAGE_MONTANT_TOTAL = "Montant Total";
+    public static final String MESSAGE_REMERCIEMENT = "Merci pour votre confiance!";
     public static final String CHOIX_UN = "1. Afficher l'inventaire des véhicules";
     public static final String CHOIX_DEUX = "2. Facturer la location d’un véhicule";
     public static final String CHOIX_TROIS = "3. Afficher le nombre de véhicules hybrides et électriques loués";
     public static final String CHOIX_QUATRE = "4. Quitter le programme";
+    public static final String ENCADRE_SOUS_TIRE = "-----------------------------------------------------------";
     public static final char VEHICULE_HYBRIDE = 'h';
     public static final char VEHICULE_ELECTRIQUE = 'e';
     public static final char VEHICULE_PETIT = 'p';
@@ -522,6 +533,69 @@ public class Main {
 
         return description;
     }
+
+    public static void afficherVehiculeDisponible( int nbLouesHP, int nbLouesHI, int nbLouesHG,  int nbLouesEP,  int nbLouesEI, int nbLouesEG){
+        System.out.printf("Petit %15d %15d", nbLouesHP, nbLouesEP);
+        System.out.printf("\nIntermédiaire %7d %15d", nbLouesHI, nbLouesEI);
+        System.out.printf("\nGrand %15d %15d\n\n", nbLouesHG, nbLouesEG);
+        System.out.println(ENCADRE_SOUS_TIRE);
+    }
+
+    public static void afficherFacture(int numeroFacture,
+                                       String prenomLocataire,
+                                       String nomLocataire,
+                                       String telephoneLocataire,
+                                       String permisLocataire,
+                                       String typeVehicule,
+                                       String grandeurVehicule,
+                                       char modePaiement,
+                                       char typeCarteCredit,
+                                       String numeroCarteCredit,
+                                       int nbrJourLocation,
+                                       float prixLocationParJour,
+                                       float prixAssuranceParJour,
+                                       float rabais,
+                                       float montantLocation,
+                                       float montantAssurance,
+                                       float sousTotalFacture,
+                                       float montantTPS,
+                                       float montantTVQ,
+                                       float montantTotalFacture
+                                       ){
+        System.out.println("Facture No :    " + numeroFacture);
+        System.out.println(ENCADRE_SOUS_TIRE);
+
+        System.out.println("\nPrénom et nom : " +  prenomLocataire + " " + nomLocataire);
+        System.out.println("Téléphone : " + telephoneLocataire);
+        System.out.println("Permis de conduire : " + permisLocataire);
+
+        System.out.print("\nType de véhicule : " + typeVehicule);
+        System.out.print("Grandeur du véhicule : " + grandeurVehicule);
+
+        // Dates de début et de retour du location
+        System.out.println("\nNombre de jours de location : " + nbrJourLocation);
+//        System.out.println("Date de location : " + dateLocationFormate);
+//
+//        dateRetourFormate = now.plusHours(3).plusDays(choixJoursLocation).format(FORMATTER);
+//        System.out.println("Date de retour   : " +  dateRetourFormate);
+
+        // Mode de paiement
+        System.out.print("\nMode de paiement : " + modePaiement);
+        System.out.print("\nPrix de la location par jour       " + prixLocationParJour);
+        System.out.print("\nPrix de l'assurance par jour       " + prixAssuranceParJour);
+
+        System.out.printf("\n%-34s %.2f$", MESSAGE_RABAIS_LOCATION, rabais);
+
+        System.out.printf("\n\n%-34s %.2f$", MESSAGE_MONTANT_LOCATION_SOUS_TOTAL, montantLocation);
+        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_ASSURANCE, montantAssurance);
+        System.out.printf("\n\n%-34s %.2f$", MESSAGE_SOUS_TOTAL, sousTotalFacture);
+        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TPS, montantTPS);
+        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TVQ, montantTVQ);
+        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TOTAL, (montantTotalFacture));
+
+    }
+
+
 
 
     public static void main(String[] args) {
