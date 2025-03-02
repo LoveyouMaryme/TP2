@@ -1,4 +1,3 @@
-import javax.sound.midi.SysexMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -32,7 +31,6 @@ public class Main {
     public static final float POURCENTAGE_TPS = 0.05f;
     public static final float POURCENTAGE_TVQ = 0.09975f;
     public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
-    public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
     public static final int MAX_CHAR_TELEPHONE = 14;
     public static final char PARANTHESE_OUVRANTE = '(';
     public static final char PARANTHESE_FERMANTE = ')';
@@ -47,9 +45,9 @@ public class Main {
     public static final char CARTE_CREDIT = 'c';
     public static final char VISA_CARTE_CREDIT = 'v';
     public static final char MC_CARTE_CREDIT = 'm';
+    public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
 
-
-    public static void affichageBievenue(){
+    public static void affichageBievenue() {
         final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
         final String MESSAGE_BIENVENUE = "Bienvenue dans le système de facturation de " + NOM_ENTREPRISE;
         final String ENCADRE_TITRE = "---------------------------------------------------------------------------------";
@@ -61,12 +59,13 @@ public class Main {
         System.out.println(ENCADRE_TITRE + "\n");
     }
 
-    public static void affichage(){
+    public static void affichage() {
 
         System.out.println("\n" + MESSAGE_MENU_CHOIX);
         System.out.printf("%s\n%s\n%s\n%s\n", CHOIX_UN, CHOIX_DEUX, CHOIX_TROIS, CHOIX_QUATRE);
 
     }
+
     public static byte choix() {
 
         byte choixOption;
@@ -74,7 +73,7 @@ public class Main {
             System.out.print("\n\nEntrez votre choix : ");
             choixOption = Clavier.lireByte();
 
-            if(choixOption < 1 | choixOption > 4){
+            if (choixOption < 1 | choixOption > 4) {
                 System.out.println("\nL’option choisie est invalide! !\n");
                 affichage();
             }
@@ -214,7 +213,7 @@ public class Main {
             System.out.print("(P ou p pour Petit, I ou i pour Intermédiaire, et G ou g pour Grand) :    ");
             choixGrandeur = Character.toLowerCase(Clavier.lireCharLn());
 
-            if (choixGrandeur == VEHICULE_PETIT || choixGrandeur == VEHICULE_INTERMEDIAIRE  || choixGrandeur == VEHICULE_GRAND ) {
+            if (choixGrandeur == VEHICULE_PETIT || choixGrandeur == VEHICULE_INTERMEDIAIRE || choixGrandeur == VEHICULE_GRAND) {
                 valideGrandeurVehicule = true;
             } else {
                 System.out.println("La grandeur du véhicule est invalide!");
@@ -498,6 +497,33 @@ public class Main {
         }
     }
 
+    private static String obtenirDescriptionType(char type) {
+        String description;
+
+        if (type == VEHICULE_HYBRIDE) {
+            description = "Hybride";
+        } else {
+            description = "Électrique";
+        }
+
+        return description;
+    }
+
+    private static String obtenirDescriptionGrandeur(char type) {
+        String description;
+
+        if (type == VEHICULE_PETIT) {
+            description = "Petit";
+        } else if (type == VEHICULE_INTERMEDIAIRE) {
+            description = "Intermediaire";
+        } else {
+            description = "Grand";
+        }
+
+        return description;
+    }
+
+
     public static void main(String[] args) {
         byte choixMenu;
 
@@ -506,7 +532,6 @@ public class Main {
         affichage();
 
         choixMenu = choix();
-
 
         do {
             switch (choixMenu) {
