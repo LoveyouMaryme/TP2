@@ -133,7 +133,7 @@ public class Main {
     }
 
 
-    public static String prenomLocataire() {
+    public static String saisiPrenomLocataire() {
         String prenomLocataire;
         boolean validePrenom = false;
 
@@ -152,7 +152,7 @@ public class Main {
         return prenomLocataire;
     }
 
-    public static String nomLocataire() {
+    public static String saisiNomLocataire() {
         String nomLocataire;
         boolean valideNom = false;
 
@@ -171,7 +171,7 @@ public class Main {
         return nomLocataire;
     }
 
-    public static String telephone() {
+    public static String saisiTelephone() {
         String telephone;
         boolean valideTelephone = false;
 
@@ -216,7 +216,7 @@ public class Main {
         return permisConduite();
     }
 
-    public static char typeVehicule() {
+    public static char saisiTypeVehicule() {
         char choixType;
         boolean valideTypeVehicule = false;
 
@@ -235,7 +235,7 @@ public class Main {
         return choixType;
     }
 
-    public static char grandeurVehicule() {
+    public static char saisiGrandeurVehicule() {
         char choixGrandeur;
         boolean valideGrandeurVehicule = false;
 
@@ -255,7 +255,7 @@ public class Main {
 
     }
 
-    public static int jourLocation() {
+    public static int saisiJourLocation() {
         int nbrJour;
         boolean valideNbrJour = false;
 
@@ -276,7 +276,7 @@ public class Main {
         return nbrJour;
     }
 
-    public static char carteCredit() {
+    public static char saisiCarteCredit() {
 
         char choixCarteCredit;
         boolean valideCarteCredit = false;
@@ -296,7 +296,7 @@ public class Main {
         return choixCarteCredit;
     }
 
-    public static char modePaiement() {
+    public static char saisiModePaiement() {
         char choixPaiement;
         boolean valideCarteCredit = false;
 
@@ -315,7 +315,7 @@ public class Main {
         return choixPaiement;
     }
 
-    public static String numeroCarteCredit() {
+    public static String saisiNumeroCarteCredit() {
         String numeroCarte;
         boolean valideCarte = false;
 
@@ -334,7 +334,7 @@ public class Main {
         return numeroCarte;
     }
 
-    public static char assurance() {
+    public static char saisiAssurance() {
         char choixAssurance;
         boolean valideChoixAssurance = false;
 
@@ -355,28 +355,31 @@ public class Main {
 
     public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
+        nbDisponiblesHP = nbDisponiblesHP - nbLouesHP;
+        nbDisponiblesHI = nbDisponiblesHI - nbLouesHI;
+        nbDisponiblesHG = nbDisponiblesHG - nbLouesHG;
+        nbDisponiblesEP = nbDisponiblesEP - nbLouesEP;
+        nbDisponiblesEI = nbDisponiblesEI - nbLouesEI;
+        nbDisponiblesEG = nbDisponiblesEG - nbLouesEG;
 
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
-                return nbLouesHP++;
+                return nbDisponiblesHP;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbLouesHI++;
-            } else if (grandeur == VEHICULE_GRAND) {
-                return nbLouesHG++;
+                return nbDisponiblesHI;
+            } else {
+                return nbDisponiblesHG;
             }
 
         } else {
-            if (type == VEHICULE_ELECTRIQUE) {
-                if (grandeur == VEHICULE_PETIT) {
-                    return nbLouesEP++;
-                } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                    return nbLouesEI++;
-                } else if (grandeur == VEHICULE_GRAND) {
-                    return nbLouesEG++;
-                }
+            if (grandeur == VEHICULE_PETIT) {
+                return nbDisponiblesEP;
+            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                return nbDisponiblesEI;
+            } else {
+                return nbDisponiblesEG;
             }
         }
-        return -1;
     }
 
     public static float obtenirPrixLocation(char type, char grandeur) {
@@ -385,22 +388,19 @@ public class Main {
                 return PRIX_HYBRIDE_PETIT;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
                 return PRIX_HYBRIDE_INTERMEDIAIRE;
-            } else if (grandeur == VEHICULE_GRAND) {
+            } else {
                 return PRIX_HYBRIDE_GRAND;
             }
 
         } else {
-            if (type == VEHICULE_ELECTRIQUE) {
-                if (grandeur == VEHICULE_PETIT) {
-                    return PRIX_ELECTRIQUE_PETIT;
-                } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                    return PRIX_ELECTRIQUE_INTERMEDIAIRE;
-                } else if (grandeur == VEHICULE_GRAND) {
-                    return PRIX_ELECTRIQUE_GRAND;
-                }
+            if (grandeur == VEHICULE_PETIT) {
+                return PRIX_ELECTRIQUE_PETIT;
+            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                return PRIX_ELECTRIQUE_INTERMEDIAIRE;
+            } else {
+                return PRIX_ELECTRIQUE_GRAND;
             }
         }
-        return -1;
     }
 
     public static float ObtenirPrixAssurance(char type, char grandeur, char choixAssurance) {
@@ -413,27 +413,25 @@ public class Main {
                     return ASSURANCE_HYBRIDE_PETIT;
                 } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
                     return ASSURANCE_HYBRIDE_INTERMEDIAIRE;
-                } else if (grandeur == VEHICULE_GRAND) {
+                } else {
                     return ASSURANCE_HYBRIDE_GRAND;
                 }
 
             } else {
-                if (type == VEHICULE_ELECTRIQUE) {
-                    if (grandeur == VEHICULE_PETIT) {
-                        return ASSURANCE_ELECTRIQUE_PETIT;
-                    } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                        return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
-                    } else if (grandeur == VEHICULE_GRAND) {
-                        return ASSURANCE_ELECTRIQUE_GRAND;
-                    }
+                if (grandeur == VEHICULE_PETIT) {
+                    return ASSURANCE_ELECTRIQUE_PETIT;
+                } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
+                    return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
+                } else {
+                    return ASSURANCE_ELECTRIQUE_GRAND;
                 }
             }
+
         } else {
             return 0;
         }
-
-        return -1;
     }
+
 
     public static float obtenirRabais(float prixLocation, char type, char grandeur, int nbJourLocation) {
         float rabaisApplique;
@@ -631,46 +629,108 @@ public class Main {
         System.out.println(ENCADRE_SOUS_TIRE);
     }
 
+    public static boolean verifieVoitureChoisiDisponible(int nbrDisponible) {
+        boolean vehiculeEstDisponible;
+
+        if (nbrDisponible != 0) {
+            System.out.println(nbrDisponible + " véhicules de ce type et de cette grandeur sont disponibles !\n");
+            vehiculeEstDisponible = false;
+
+        } else {
+            System.out.print("Aucun véhicule de ce type et de cette grandeur n'est disponible !");
+            vehiculeEstDisponible = true;
+
+
+
+        }
+        return vehiculeEstDisponible;
+    }
+
+    public static boolean retourMenu() {
+        boolean enterIsPressed;
+        System.out.println("\n\nAppuyer sur <ENTREE> pour réafficher le menu...");
+        Clavier.lireFinLigne();
+        enterIsPressed = true;
+
+        return enterIsPressed;
+
+
+    }
+
 
     public static void main(String[] args) {
+
         byte choixMenu;
-        nbDisponiblesHP = 12;
+
+        nbDisponiblesHP = 13;
         nbDisponiblesHI = 10;
         nbDisponiblesHG = 3;
         nbDisponiblesEP = 11;
         nbDisponiblesEI = 9;
         nbDisponiblesEG = 5;
 
-        affichageBievenue();
-        affichage();
+        char typeVehiculeChoisi;
+        char grandeurVehiculeChoisi;
+        int jourLocation;
+        String prenomLocataire;
+        String nomLocataire;
 
-        choixMenu = choix();
+        boolean enterIsPressed = false;
+
+        int nbLouesHP = 0;
+        int nbLouesHI = 0;
+        int nbLouesHG = 0;
+        int nbLouesEP = 0;
+        int nbLouesEI = 0;
+        int nbLouesEG = 0;
+
+        int nbrDisponibleVehiculeChoisi;
+
+        affichageBievenue();
+
 
         do {
-            switch (choixMenu) {
-                // Afficher l'inventaire des voitures disponibles
-                case 1:
-                    enteteInformationEntreprise();
-                    enteteNombreVehicule(true);
-                    afficherVehiculeDisponible(0, 0, 0, 0, 0, 0);
-                    choix();
-                    break;
-                // Louer une voiture selon sa taille, son type, sa disponibilité et valider les modalités de paiement
-                case 2:
-                    System.out.println("2");
-                    choix();
-                    break;
-                case 3:
-                    enteteInformationEntreprise();
-                    enteteNombreVehicule(false);
-                    afficherVehiculeLoues(0, 0, 0, 0, 0, 0);
-                    choix();
-                    break;
-                // Quitter le programme
-                case 4:
-                    System.out.println("\n\nMerci et à la prochaine !");
-            }
+            affichage();
+            choixMenu = choix();
+            enterIsPressed = false;
 
+            while (enterIsPressed == false) {
+
+                switch (choixMenu) {
+                    // Afficher l'inventaire des voitures disponibles
+                    case 1:
+                        enteteInformationEntreprise();
+                        enteteNombreVehicule(true);
+                        afficherVehiculeDisponible(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
+                        break;
+                    // Louer une voiture selon sa taille, son type, sa disponibilité et valider les modalités de paiement
+                    case 2:
+                        typeVehiculeChoisi = saisiTypeVehicule();
+                        grandeurVehiculeChoisi = saisiGrandeurVehicule();
+                        nbrDisponibleVehiculeChoisi = obtenirVoituresDisponibles(typeVehiculeChoisi, grandeurVehiculeChoisi, nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
+                        enterIsPressed = verifieVoitureChoisiDisponible(nbrDisponibleVehiculeChoisi);
+                        if (enterIsPressed == true) {
+                            break;
+                        }
+                        jourLocation = saisiJourLocation();
+                        prenomLocataire = saisiPrenomLocataire();
+                        nomLocataire = saisiNomLocataire();
+                        break;
+                    case 3:
+                        enteteInformationEntreprise();
+                        enteteNombreVehicule(false);
+                        afficherVehiculeLoues(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
+                        break;
+                    // Quitter le programme
+                    case 4:
+                        System.out.println("\n\nMerci et à la prochaine !");
+                }
+
+                enterIsPressed = retourMenu();
+                if (enterIsPressed == true) {
+                    break;
+                }
+            }
         } while (choixMenu != 4);
 
     }
