@@ -143,7 +143,7 @@ public class Main {
         boolean validePrenom = false;
 
         do {
-            System.out.print("Entrez le prénom du locataire (entre 2 et 30 caractères inclusivement):");
+            System.out.print("Entrez le prénom du locataire (entre 2 et 30 caractères inclusivement): ");
             prenomLocataire = Clavier.lireString().trim();
 
             if (prenomLocataire.length() < 2 || prenomLocataire.length() > 30) {
@@ -280,7 +280,7 @@ public class Main {
         boolean valideNbrJour = false;
 
         do {
-            System.out.print("Entrez le nombre de jours de location");
+            System.out.println("Entrez le nombre de jours de location");
             System.out.print("(supérieur à 0 et inférieur ou égal à 30) :    ");
             nbrJour = Clavier.lireInt();
 
@@ -303,7 +303,7 @@ public class Main {
         boolean valideCarteCredit = false;
 
         do {
-            System.out.print("Entrez le type de la carte de crédit");
+            System.out.println("Entrez le type de la carte de crédit");
             System.out.print("(V ou v pour Visa, et M ou m pour MasterCard): ");
             choixCarteCredit = Character.toLowerCase(Clavier.lireCharLn());
 
@@ -325,7 +325,7 @@ public class Main {
         boolean valideCarteCredit = false;
 
         do {
-            System.out.print("Entrez le mode de paiement");
+            System.out.println("Entrez le mode de paiement");
             System.out.print("(D ou d pour Débit, C ou c pour Crédit): ");
             choixPaiement = Character.toLowerCase(Clavier.lireCharLn());
 
@@ -675,7 +675,7 @@ public class Main {
         //        System.out.println("Date de retour   : " +  dateRetourFormate);
 
         // Mode de paiement
-        System.out.print("\nMode de paiement : " + modePaiement);
+        System.out.print("\nMode de paiement : " + obtenirDescriptionModePaiement(modePaiement));
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_LOCATION, prixLocationParJour);
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_ASSURANCE, prixAssuranceParJour);
 
