@@ -548,9 +548,9 @@ public class Main {
     }
 
     public static int incrementerVehiculeLoue(char typeChoisi, char typeCible, char grandeurChoisi, char grandeurCible, int nbrVehiculeChoisi) {
-
         if (typeChoisi == typeCible && grandeurChoisi == grandeurCible) {
-            return ++nbrVehiculeChoisi;
+            nbrVehiculeChoisi ++;
+            return nbrVehiculeChoisi;
         } else {
             return nbrVehiculeChoisi;
         }
@@ -799,8 +799,16 @@ public class Main {
                         if (enterIsPressed == true) {
                             break;
                         }
+
                         nbrVehiculeLoueChoisi = obtenirNbrVehiculeLoue(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG, typeVehiculeChoisi, grandeurVehiculeChoisi);
-                        nbrVehiculeLoueChoisi = incrementerVehiculeLoue(typeVehiculeChoisi, typeVehiculeChoisi, grandeurVehiculeChoisi, grandeurVehiculeChoisi, nbrVehiculeLoueChoisi);
+                        nbLouesHP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE , grandeurVehiculeChoisi, VEHICULE_PETIT, nbrVehiculeLoueChoisi);
+                        nbLouesHI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbrVehiculeLoueChoisi);
+                        nbLouesHG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbrVehiculeLoueChoisi);
+
+                        nbLouesEP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_PETIT,  nbrVehiculeLoueChoisi);
+                        nbLouesEI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbrVehiculeLoueChoisi);
+                        nbLouesEG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbrVehiculeLoueChoisi);
+
                         jourLocation = saisiJourLocation();
                         prenomLocataire = saisiPrenomLocataire();
                         nomLocataire = saisiNomLocataire();
