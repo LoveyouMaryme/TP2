@@ -479,7 +479,7 @@ public class Main {
 
         montantLocation = nbrJourLocation * prixLocation + rabais;
 
-        return -1;
+        return montantLocation;
     }
 
     public static float obtenirMontantAssurance(int nbrJourLocation, float prixAssurance) {
@@ -594,7 +594,7 @@ public class Main {
         return description;
     }
 
-    public static int obtenirNbrVehiculeLoue(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG, char type, char grandeur){
+    public static int  obtenirNbrVehiculeLoue(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG, char type, char grandeur){
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
                 return nbLouesHP;
@@ -689,6 +689,10 @@ public class Main {
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TPS, montantTPS);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TVQ, montantTVQ);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TOTAL, (montantTotalFacture));
+
+        System.out.println();
+        System.out.println(ENCADRE_SOUS_TIRE);
+        System.out.println(MESSAGE_REMERCIEMENT);
 
     }
 
