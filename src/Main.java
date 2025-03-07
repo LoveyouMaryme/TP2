@@ -108,7 +108,6 @@ public class Main {
 
         } while (choixOption < 1 | choixOption > 4);
 
-
         return choixOption;
     }
 
@@ -127,12 +126,13 @@ public class Main {
         System.out.println("Adresse :       " + ADRESSE_ENTREPRISE);
         System.out.println("Téléphone :     " + TELEPHONE_ENTREPRISE);
         System.out.println("Date et Heure : " + dateNowFormate);
-        System.out.println(ENCADRE_SOUS_TIRE);
+
     }
 
     //mine
     public static void enteteNombreVehicule(boolean disponible) {
 
+        System.out.println(ENCADRE_SOUS_TIRE);
         if (disponible == true) {
             System.out.println("\n" + MESSAGE_NOMBRE_VEHICULE_INVENTAIRE);
         } else {
@@ -239,6 +239,7 @@ public class Main {
         boolean valideTypeVehicule = false;
 
         do {
+            System.out.println();
             System.out.println("Entrez le type du véhicule à louer");
             System.out.print("(H ou h pour Hybride, et E ou e pour Électrique) : ");
             choixType = Character.toLowerCase(Clavier.lireCharLn());
@@ -251,7 +252,7 @@ public class Main {
                 System.out.println("Le type de véhicule est invalide!");
             }
 
-            System.out.println();
+
 
         } while (!valideTypeVehicule);
         return choixType;
@@ -262,6 +263,7 @@ public class Main {
         boolean valideGrandeurVehicule = false;
 
         do {
+            System.out.println();
             System.out.println("Entrez la grandeur du véhicule à louer");
             System.out.print("(P ou p pour Petit, I ou i pour Intermédiaire, et G ou g pour Grand) :    ");
             choixGrandeur = Character.toLowerCase(Clavier.lireCharLn());
@@ -273,9 +275,11 @@ public class Main {
                 System.out.println("La grandeur du véhicule est invalide!");
             }
 
-            System.out.println();
+
 
         } while (!valideGrandeurVehicule);
+
+        System.out.println();
         return choixGrandeur;
 
     }
@@ -712,10 +716,12 @@ public class Main {
         boolean vehiculeEstDisponible;
 
         if (nbrDisponible != 0) {
+
             System.out.println(nbrDisponible + " véhicules de ce type et de cette grandeur sont disponibles !\n");
             vehiculeEstDisponible = false;
 
         } else {
+
             System.out.print("Aucun véhicule de ce type et de cette grandeur n'est disponible !");
             vehiculeEstDisponible = true;
 
