@@ -679,7 +679,9 @@ public class Main {
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_LOCATION, prixLocationParJour);
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_ASSURANCE, prixAssuranceParJour);
 
-        System.out.printf("\n%-34s %.2f$", MESSAGE_RABAIS_LOCATION, rabais);
+        if(rabais > 0){
+            System.out.printf("\n%-34s %.2f$", MESSAGE_RABAIS_LOCATION, rabais);
+        }
 
         System.out.printf("\n\n%-34s %.2f$", MESSAGE_MONTANT_LOCATION_SOUS_TOTAL, montantLocation);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_ASSURANCE, montantAssurance);
