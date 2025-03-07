@@ -75,13 +75,18 @@ public class Main {
         // Affichage de résultat //
         System.out.println(ENCADRE_TITRE);
         System.out.println(MESSAGE_BIENVENUE);
-        System.out.println(ENCADRE_TITRE + "\n");
+        System.out.println(ENCADRE_TITRE);
     }
 
     public static void affichage() {
 
-        System.out.println("\n" + MESSAGE_MENU_CHOIX);
+        System.out.println();
+        System.out.println();
+        System.out.println(MESSAGE_MENU_CHOIX);
         System.out.printf("%s\n%s\n%s\n%s\n", CHOIX_UN, CHOIX_DEUX, CHOIX_TROIS, CHOIX_QUATRE);
+        System.out.println();
+        System.out.println();
+
 
     }
 
@@ -89,15 +94,15 @@ public class Main {
 
         byte choixOption;
         do {
-            System.out.print("\n\nEntrez votre choix : ");
+            System.out.print("Entrez votre choix : ");
             choixOption = Clavier.lireByteLn();
-            System.out.println();
+
+
 
             if (choixOption < 1 | choixOption > 4) {
 
                 System.out.println();
                 System.out.println("L’option choisie est invalide!");
-                System.out.println();
                 affichage();
             }
 
@@ -122,7 +127,7 @@ public class Main {
         System.out.println("Adresse :       " + ADRESSE_ENTREPRISE);
         System.out.println("Téléphone :     " + TELEPHONE_ENTREPRISE);
         System.out.println("Date et Heure : " + dateNowFormate);
-
+        System.out.println(ENCADRE_SOUS_TIRE);
     }
 
     //mine
@@ -720,7 +725,9 @@ public class Main {
 
     public static boolean retourMenu() {
         boolean enterIsPressed;
-        System.out.println("\n\nAppuyer sur <ENTREE> pour réafficher le menu...");
+        System.out.println();
+        System.out.println();
+        System.out.print("Appuyer sur <ENTREE> pour réafficher le menu...");
         Clavier.lireFinLigne();
         enterIsPressed = true;
 
@@ -732,7 +739,7 @@ public class Main {
 
         byte choixMenu;
 
-        nbDisponiblesHP = 13;
+        nbDisponiblesHP = 12;
         nbDisponiblesHI = 10;
         nbDisponiblesHG = 3;
         nbDisponiblesEP = 11;
