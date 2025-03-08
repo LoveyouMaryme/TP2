@@ -1,3 +1,21 @@
+
+/**
+ * Ce programme permet de gérer la location des véhicules hybrides et électriques tel que demandé par le client.
+ *
+ * On peut :
+ *  1. Afficher l'inventaire des voitures
+ *  2. Louer une voiture en fonction de son type, de sa taille et de sa disponibilité
+ *  3. Créer une facture tout en prennant en compte les calculs business spécifés par le client
+ *  4. Regarder le nombre de voitures louées
+ *  5. Sortir du programme
+ *
+ * @author Love-Mary Victor (CJ490809)
+ * @version : 8 Mars, 2025
+ * @github : https://github.com/LoveyouMaryme/TP2
+ * @code_permanent : VICL12599701
+ */
+
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
