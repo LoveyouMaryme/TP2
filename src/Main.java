@@ -752,7 +752,7 @@ public class Main {
         char carteCreditLocataire = ' ';
         String numeroCarteLocataire = null;
         char choixAssuranceLocataire ;
-        int ancienNumeroFacture = 0;
+        int NumeroFacture = 0;
         float prixLocationParJour;
         float prixAssuranceParJour;
         float rabaisLocation;
@@ -772,7 +772,6 @@ public class Main {
         int nbLouesEI = 0;
         int nbLouesEG = 0;
 
-        int nbrVehiculeLoueChoisi;
 
         int nbrDisponibleVehiculeChoisi;
 
@@ -838,9 +837,9 @@ public class Main {
                         montantTPSLocation = obtenirMontantTPS(sousTotalLocation);
                         montantTVQLocation = obtenirMontantTVQ(sousTotalLocation);
                         montantTotalLocation = obtenirMontantTotal(sousTotalLocation, montantTPSLocation, montantTVQLocation);
-                        nouvelleNumeroFacture = obtenirNumeroFacture(ancienNumeroFacture);
+                        NumeroFacture = obtenirNumeroFacture(NumeroFacture);
                         afficherFacture(
-                                nouvelleNumeroFacture,
+                                NumeroFacture,
                                 prenomLocataire,
                                 nomLocataire,
                                 telephoneLocataire,
