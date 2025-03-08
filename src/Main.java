@@ -27,6 +27,12 @@ public class Main {
     public static final char VEHICULE_PETIT = 'p';
     public static final char VEHICULE_INTERMEDIAIRE = 'i';
     public static final char VEHICULE_GRAND = 'g';
+    public static final int nbDisponiblesHP = 12;
+    public static final int nbDisponiblesHI = 10;
+    public static final int nbDisponiblesHG = 3;
+    public static final int nbDisponiblesEP = 11;
+    public static final int nbDisponiblesEI = 9;
+    public static final int nbDisponiblesEG = 5;
     public static final float PRIX_HYBRIDE_PETIT = 55.75f;
     public static final float PRIX_HYBRIDE_INTERMEDIAIRE = 60.25f;
     public static final float PRIX_HYBRIDE_GRAND = 65.50f;
@@ -60,12 +66,6 @@ public class Main {
     public static final char MC_CARTE_CREDIT = 'm';
     public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
 
-    static int nbDisponiblesHP;
-    static int nbDisponiblesHI;
-    static int nbDisponiblesHG;
-    static int nbDisponiblesEP;
-    static int nbDisponiblesEI;
-    static int nbDisponiblesEG;
 
     public static void affichageBievenue() {
         final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
@@ -396,29 +396,22 @@ public class Main {
 
     public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
-        nbDisponiblesHP = nbDisponiblesHP - nbLouesHP;
-        nbDisponiblesHI = nbDisponiblesHI - nbLouesHI;
-        nbDisponiblesHG = nbDisponiblesHG - nbLouesHG;
-        nbDisponiblesEP = nbDisponiblesEP - nbLouesEP;
-        nbDisponiblesEI = nbDisponiblesEI - nbLouesEI;
-        nbDisponiblesEG = nbDisponiblesEG - nbLouesEG;
-
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
-                return nbDisponiblesHP;
+                return nbDisponiblesHP - nbLouesHP;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbDisponiblesHI;
+                return nbDisponiblesHI - nbLouesHI;
             } else {
-                return nbDisponiblesHG;
+                return nbDisponiblesHG - nbLouesHG;
             }
 
         } else {
             if (grandeur == VEHICULE_PETIT) {
-                return nbDisponiblesEP;
+                return nbDisponiblesEP - nbLouesEG;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbDisponiblesEI;
+                return nbDisponiblesEI - nbLouesEI;
             } else {
-                return nbDisponiblesEG;
+                return nbDisponiblesEG - nbLouesEG;
             }
         }
     }
@@ -746,12 +739,7 @@ public class Main {
 
         byte choixMenu;
 
-        nbDisponiblesHP = 12;
-        nbDisponiblesHI = 10;
-        nbDisponiblesHG = 3;
-        nbDisponiblesEP = 11;
-        nbDisponiblesEI = 9;
-        nbDisponiblesEG = 5;
+
 
         char typeVehiculeChoisi;
         char grandeurVehiculeChoisi;
