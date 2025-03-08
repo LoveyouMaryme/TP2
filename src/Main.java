@@ -479,7 +479,7 @@ public class Main {
     public static float obtenirMontantLocation(int nbrJourLocation, float prixLocation, float rabais) {
         float montantLocation;
 
-        montantLocation = (nbrJourLocation * prixLocation) + (nbrJourLocation * prixLocation);
+        montantLocation = (nbrJourLocation * prixLocation) + (nbrJourLocation * rabais);
 
         return montantLocation;
     }
@@ -645,10 +645,8 @@ public class Main {
         String numeroCarteCreditCache;
         enteteInformationEntreprise();
         LocalDateTime now = LocalDateTime.now();
-        int nouvelleNumeroFacture;
 
-        nouvelleNumeroFacture = obtenirNumeroFacture(numeroFacture);
-        System.out.println("Facture No :    " + nouvelleNumeroFacture);
+        System.out.println("Facture No :    " + numeroFacture);
         System.out.println(ENCADRE_SOUS_TIRE);
 
         System.out.println();
@@ -754,7 +752,7 @@ public class Main {
         char carteCreditLocataire = ' ';
         String numeroCarteLocataire = null;
         char choixAssuranceLocataire ;
-        int numeroFactureClient = 0;
+        int ancienNumeroFacture = 0;
         float prixLocationParJour;
         float prixAssuranceParJour;
         float rabaisLocation;
@@ -764,6 +762,7 @@ public class Main {
         float montantTPSLocation;
         float montantTVQLocation;
         float montantTotalLocation;
+        int nouvelleNumeroFacture;
 
         boolean enterIsPressed = false;
         int nbLouesHP = 0;
@@ -839,9 +838,9 @@ public class Main {
                         montantTPSLocation = obtenirMontantTPS(sousTotalLocation);
                         montantTVQLocation = obtenirMontantTVQ(sousTotalLocation);
                         montantTotalLocation = obtenirMontantTotal(sousTotalLocation, montantTPSLocation, montantTVQLocation);
-
+                        nouvelleNumeroFacture = obtenirNumeroFacture(ancienNumeroFacture);
                         afficherFacture(
-                                numeroFactureClient,
+                                nouvelleNumeroFacture,
                                 prenomLocataire,
                                 nomLocataire,
                                 telephoneLocataire,
