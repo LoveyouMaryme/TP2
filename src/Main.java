@@ -677,6 +677,8 @@ public class Main {
             numeroCarteCreditCache = "XXXX XXXX XXXX " + numeroCarteCredit.substring(15, 19);
             System.out.println("Type de la carte de crédit : " + obtenirDescriptionCarteCredit(typeCarteCredit));
             System.out.println("Numéro de la carte de crédit : " + numeroCarteCreditCache);
+        }else{
+            System.out.println();
         }
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_LOCATION, prixLocationParJour);
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_ASSURANCE, prixAssuranceParJour);
