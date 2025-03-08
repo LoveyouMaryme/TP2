@@ -377,7 +377,7 @@ public class Main {
         boolean valideChoixAssurance = false;
 
         do {
-            System.out.print("Désirez-vous prendre l'assurance");
+            System.out.println("Désirez-vous prendre l'assurance");
             System.out.print("(O ou o pour Oui, N ou n pour Non) ? :    ");
             choixAssurance = Character.toLowerCase(Clavier.lireCharLn());
 
@@ -534,12 +534,12 @@ public class Main {
     public static int obtenirNumeroFacture(int ancienNumeroFacture) {
         int numeroFacture;
 
-        numeroFacture = ancienNumeroFacture++;
+        numeroFacture = ++ancienNumeroFacture;
 
         return numeroFacture;
     }
 
-    private static String obtenirTempsDebutLocation(LocalDateTime tempsMaintenant) {
+    private static String calculerDebutLocation(LocalDateTime tempsMaintenant) {
         String tempsDebutLocation;
 
         tempsDebutLocation = tempsMaintenant.plusHours(3).format(FORMATTER);
@@ -548,7 +548,7 @@ public class Main {
 
     }
 
-    private static String obtenirTempsFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation) {
+    private static String calculerFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation) {
         String tempsFinLocation;
 
         tempsFinLocation = tempsMaintenant.plusHours(3).plusDays(nbrJourLocation).format(FORMATTER);
@@ -603,40 +603,27 @@ public class Main {
         return description;
     }
 
-    public static int  obtenirNbrVehiculeLoue(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG, char type, char grandeur){
-        if (type == VEHICULE_HYBRIDE) {
-            if (grandeur == VEHICULE_PETIT) {
-                return nbLouesHP;
-            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbLouesHI;
-            } else {
-                return nbLouesHG;
-            }
+    private static String obtenirDescriptionCarteCredit(char carteCredit) {
+        String description;
 
+        if (carteCredit == VISA_CARTE_CREDIT) {
+            description = "Visa";
         } else {
-            if (grandeur == VEHICULE_PETIT) {
-                return nbLouesEP;
-            } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbLouesEI;
-            } else {
-                return nbLouesEG;
-            }
+            description = "MasterCard";
         }
+
+        return description;
     }
+
 
 
     public static void afficherVehiculeDisponible(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
-        nbDisponiblesHP = nbDisponiblesHP - nbLouesHP;
-        nbDisponiblesHI = nbDisponiblesHI - nbLouesHI;
-        nbDisponiblesHG = nbDisponiblesHG - nbLouesHG;
-        nbDisponiblesEP = nbDisponiblesEP - nbLouesEP;
-        nbDisponiblesEI = nbDisponiblesEI - nbLouesEI;
-        nbDisponiblesEG = nbDisponiblesEG - nbLouesEG;
+// jupdate ensuite jenleve encoreiue45r
 
-        System.out.printf("Petit %15d %15d", nbDisponiblesHP, nbDisponiblesEP);
-        System.out.printf("\nIntermédiaire %7d %15d", nbDisponiblesHI, nbDisponiblesEI);
-        System.out.printf("\nGrand %15d %15d\n\n", nbDisponiblesHG, nbDisponiblesEG);
+        System.out.printf("Petit %15d %15d", (nbDisponiblesHP - nbLouesHP ), (nbDisponiblesEP - nbLouesEP));
+        System.out.printf("\nIntermédiaire %7d %15d", (nbDisponiblesHI - nbLouesHI ), (nbDisponiblesEI - nbLouesEI));
+        System.out.printf("\nGrand %15d %15d\n\n", (nbDisponiblesHG - nbLouesHG ), (nbDisponiblesEG - nbLouesEG));
         System.out.println(ENCADRE_SOUS_TIRE);
 
     }
@@ -649,6 +636,8 @@ public class Main {
                                        char typeVehicule,
                                        char grandeurVehicule,
                                        char modePaiement,
+                                       char typeCarteCredit,
+                                       String numeroCarteCredit,
                                        int nbrJourLocation,
                                        float prixLocationParJour,
                                        float prixAssuranceParJour,
@@ -660,8 +649,13 @@ public class Main {
                                        float montantTVQ,
                                        float montantTotalFacture
     ) {
+        String numeroCarteCreditCache;
         enteteInformationEntreprise();
-        System.out.println("Facture No :    " + numeroFacture);
+        LocalDateTime now = LocalDateTime.now();
+        int nouvelleNumeroFacture;
+
+        nouvelleNumeroFacture = obtenirNumeroFacture(numeroFacture);
+        System.out.println("Facture No :    " + nouvelleNumeroFacture);
         System.out.println(ENCADRE_SOUS_TIRE);
 
         System.out.println();
@@ -674,17 +668,23 @@ public class Main {
         System.out.print("Type de véhicule : " + obtenirDescriptionType(typeVehicule));
         System.out.println();
         System.out.print("Grandeur du véhicule : " + obtenirDescriptionGrandeur(grandeurVehicule));
+        System.out.println();
 
         // Dates de début et de retour du location
         System.out.println();
         System.out.println("Nombre de jours de location : " + nbrJourLocation);
-        //        System.out.println("Date de location : " + dateLocationFormate);
-        //
-        //        dateRetourFormate = now.plusHours(3).plusDays(choixJoursLocation).format(FORMATTER);
-        //        System.out.println("Date de retour   : " +  dateRetourFormate);
+        System.out.println("Date de location : " + calculerDebutLocation(now) );
+        System.out.println("Date de retour   : " + calculerFinLocation(now, nbrJourLocation));
 
         // Mode de paiement
         System.out.print("\nMode de paiement : " + obtenirDescriptionModePaiement(modePaiement));
+
+        if(modePaiement == CARTE_CREDIT){
+            System.out.println();
+            numeroCarteCreditCache = "XXXX XXXX XXXX " + numeroCarteCredit.substring(15, 19);
+            System.out.println("Type de la carte de crédit : " + obtenirDescriptionCarteCredit(typeCarteCredit));
+            System.out.println("Numéro de la carte de crédit : " + numeroCarteCreditCache);
+        }
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_LOCATION, prixLocationParJour);
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_ASSURANCE, prixAssuranceParJour);
 
@@ -702,6 +702,7 @@ public class Main {
         System.out.println();
         System.out.println(ENCADRE_SOUS_TIRE);
         System.out.println(MESSAGE_REMERCIEMENT);
+        System.out.println();
 
     }
 
@@ -760,10 +761,10 @@ public class Main {
         String telephoneLocataire;
         String permisLocataire;
         char modePaiementLocataire;
-        char carteCreditLocataire;
-        String numeroCarteLocataire;
-        char choixAssuranceLocataire;
-        int numeroFacture = 1;
+        char carteCreditLocataire = ' ';
+        String numeroCarteLocataire = null;
+        char choixAssuranceLocataire ;
+        int numeroFactureClient = 0;
         float prixLocationParJour;
         float prixAssuranceParJour;
         float rabaisLocation;
@@ -800,6 +801,7 @@ public class Main {
                     case 1:
                         enteteInformationEntreprise();
                         enteteNombreVehicule(true);
+
                         afficherVehiculeDisponible(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
                         break;
                     // Louer une voiture selon sa taille, son type, sa disponibilité et valider les modalités de paiement
@@ -813,14 +815,14 @@ public class Main {
                             break;
                         }
 
-                        nbrVehiculeLoueChoisi = obtenirNbrVehiculeLoue(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG, typeVehiculeChoisi, grandeurVehiculeChoisi);
-                        nbLouesHP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE , grandeurVehiculeChoisi, VEHICULE_PETIT, nbrVehiculeLoueChoisi);
-                        nbLouesHI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbrVehiculeLoueChoisi);
-                        nbLouesHG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbrVehiculeLoueChoisi);
 
-                        nbLouesEP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_PETIT,  nbrVehiculeLoueChoisi);
-                        nbLouesEI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbrVehiculeLoueChoisi);
-                        nbLouesEG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbrVehiculeLoueChoisi);
+                        nbLouesHP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE , grandeurVehiculeChoisi, VEHICULE_PETIT, nbLouesHP);
+                        nbLouesHI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbLouesEI);
+                        nbLouesHG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbLouesHG);
+
+                        nbLouesEP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_PETIT,  nbLouesEP);
+                        nbLouesEI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbLouesEI);
+                        nbLouesEG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbLouesEG);
 
                         jourLocation = saisiJourLocation();
                         prenomLocataire = saisiPrenomLocataire();
@@ -831,14 +833,11 @@ public class Main {
 
                         if (modePaiementLocataire == CARTE_CREDIT) {
                             carteCreditLocataire = saisiCarteCredit();
-                        }
-
-
-                        if (modePaiementLocataire == CARTE_CREDIT) {
                             numeroCarteLocataire = saisiNumeroCarteCredit();
-                        } else {
-                            numeroCarteLocataire = "";
+                        }else{
+                            carteCreditLocataire = 'c';
                         }
+
 
                         choixAssuranceLocataire = saisiAssurance();
                         prixLocationParJour = obtenirPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
@@ -852,7 +851,7 @@ public class Main {
                         montantTotalLocation = obtenirMontantTotal(sousTotalLocation, montantTPSLocation, montantTVQLocation);
 
                         afficherFacture(
-                                numeroFacture,
+                                numeroFactureClient,
                                 prenomLocataire,
                                 nomLocataire,
                                 telephoneLocataire,
@@ -860,6 +859,8 @@ public class Main {
                                 typeVehiculeChoisi,
                                 grandeurVehiculeChoisi,
                                 modePaiementLocataire,
+                                carteCreditLocataire,
+                                numeroCarteLocataire,
                                 jourLocation,
                                 prixLocationParJour,
                                 prixAssuranceParJour,
