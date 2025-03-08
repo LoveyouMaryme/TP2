@@ -479,7 +479,7 @@ public class Main {
     public static float obtenirMontantLocation(int nbrJourLocation, float prixLocation, float rabais) {
         float montantLocation;
 
-        montantLocation = nbrJourLocation * prixLocation + rabais;
+        montantLocation = (nbrJourLocation * prixLocation) + (nbrJourLocation * prixLocation);
 
         return montantLocation;
     }
