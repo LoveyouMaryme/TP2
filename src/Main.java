@@ -184,7 +184,7 @@ public class Main {
      * Affiche l'en-tête d'une table contenant l'inventaire des véhicules.
      *
      * @param disponible Détermine si l'affichage concerne les véhicules disponibles (true)
-     *  ou les véhicules loués (false).
+     * ou les véhicules loués (false).
      *
      *
      */
@@ -203,6 +203,7 @@ public class Main {
 
     /**
      * Demande le prénom du locataire à l'utilisateur.
+     * <p>
      * Si le prénom ne respecte pas les conditions (entre 2 et 30 caractères inclus),
      * un message d'erreur est affiché et la saisie est redemandée. (3)
      *
@@ -232,6 +233,7 @@ public class Main {
 
     /**
      * Demande le nom du locataire à l'utilisateur.
+     * <p>
      * Si le nom ne respecte pas les conditions (entre 2 et 30 caractères inclus),
      * un message d'erreur est affiché et la saisie est redemandée. (4)
      *
@@ -261,6 +263,7 @@ public class Main {
 
     /**
      * Demande le téléphone du locataire à l'utilisateur.
+     * <p>
      * Si le téléphone ne respecte pas le format spécifié : (NNN) NNN-NNNN ,
      * un message d'erreur est affiché et la saisie est redemandée. (5)
      *
@@ -295,6 +298,7 @@ public class Main {
 
     /**
      * Demande le permis de conduire du locataire à l'utilisateur.
+     * <p>
      * Si le permis de conduire ne respecte pas le format spécifié : ANNNN-NNNNNN-NN
      * un message d'erreur est affiché et la saisie est redemandée.
      *
@@ -324,6 +328,7 @@ public class Main {
 
     /**
      * Demande le type de véhicule choisi par l'utilisateur.
+     * <p>
      * L'utilisateur doit entrer "H" (Hybride) ou "E" (Électrique), sans distinction de casse.
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée.
      *
@@ -354,6 +359,7 @@ public class Main {
 
     /**
      * Demande la grandeur de véhicule choisi par l'utilisateur.
+     * <p>
      * L'utilisateur doit entrer "P" (Petit), "I" (Intermédiaire) ou "G" (Grand)
      * sans distinction de casse.
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée. (8)
@@ -387,8 +393,8 @@ public class Main {
 
     /**
      * Demande à l'utilisateur de saisir le nombre de jours de location.
-     * L'utilisateur doit entrer une valeur strictement supérieure à 0 et inférieure ou égale à 30. (9)
      * <p>
+     * L'utilisateur doit entrer une valeur strictement supérieure à 0 et inférieure ou égale à 30. (9)
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le nombre de jours de location valide (1 à 30).
@@ -417,8 +423,8 @@ public class Main {
 
     /**
      * Demande le mode de paiement du locataire à l'utilisateur.
-     * L'utilisateur doit entrer "D" (Débit) ou "C" (Crédit) sans distinction de casse.
      * <p>
+     * L'utilisateur doit entrer "D" (Débit) ou "C" (Crédit) sans distinction de casse.
      * Un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le mode de paiement valide saisi par l'utilisateur ("D" (Débit) ou "C" (Crédit))
@@ -447,8 +453,8 @@ public class Main {
 
     /**
      * Demande le type de carte de crédit du locataire à l'utilisateur.
-     L'utilisateur doit entrer "V" (Visa) ou "M" (MasterCard) sans distinction de casse.
      * <p>
+     * L'utilisateur doit entrer "V" (Visa) ou "M" (MasterCard) sans distinction de casse
      * Un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le type de carte de crédit valide saisi par l'utilisateur. (12)
@@ -478,8 +484,8 @@ public class Main {
 
     /**
      * Demande le numéro de carte de crédit du locataire à l'utilisateur.
-     * Si le numéro de carte de crédit ne respecte pas le format spécifié : NNNN BNNN NNNN NNNN.
      * <p>
+     * Si le numéro de carte de crédit ne respecte pas le format spécifié : NNNN BNNN NNNN NNNN
      * Un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le numéro de carte de crédit valide saisi par l'utilisateur. (12)
@@ -505,9 +511,17 @@ public class Main {
         return numeroCarte;
     }
 
-    public static char saisiAssurance() {
+    /**
+     * Demande à l'utilisateur s'il souhaite souscrire une assurance.
+     * L'utilisateur doit entrer "O" (Oui) ou "N" (Non), sans distinction de casse.
+     *
+     * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée.
+     *
+     * @return Le choix d'assurance valide ('o' pour Oui ou 'n' pour Non). (12)
+     */
+    public static char lireChoixAssurance() {
         char choixAssurance;
-        boolean valideChoixAssurance = false;
+        boolean estChoixAssuranceValide = false;
 
         do {
             System.out.println("Désirez-vous prendre l'assurance");
@@ -518,12 +532,12 @@ public class Main {
                 System.out.println();
                 System.out.println("La réponse est invalide!");
             } else {
-                valideChoixAssurance = true;
+                estChoixAssuranceValide = true;
             }
 
             System.out.println();
 
-        } while (!valideChoixAssurance);
+        } while (!estChoixAssuranceValide);
         return choixAssurance;
     }
 
@@ -958,7 +972,7 @@ public class Main {
                         }
 
 
-                        choixAssuranceLocataire = saisiAssurance();
+                        choixAssuranceLocataire = lireChoixAssurance();
                         prixLocationParJour = obtenirPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
                         prixAssuranceParJour = obtenirPrixAssurance(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
                         rabaisLocation = obtenirRabais(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
