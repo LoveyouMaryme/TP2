@@ -87,10 +87,10 @@ public class Main {
     public static final int MINJOURSLOCATION = 0;
 
     // Calcul des taxes et rabais
-    public static final float POURCENTAGE_TPS = 0.05f;
-    public static final float POURCENTAGE_TVQ = 0.09975f;
-    public static final float POURCENTAGE_RABAIS_LOCATION = 0.20f;
-    public static final int NBR_JOUR_RABAIS = 15;
+    public static final float TAUX_TPS = 0.05f;
+    public static final float TAUX_TVQ = 0.09975f;
+    public static final float TAUX_RABAIS = 0.20f;
+    public static final int SEUIL_JOUR_RABAIS = 15;
 
 
     // Vérification du numéro de téléphone
@@ -164,7 +164,6 @@ public class Main {
     /**
      * Affiche l'en-tête contenant les informations de l'entreprise,
      * incluant le nom, l'adresse, le téléphone et la date/heure actuelle.
-     *
      */
     public static void afficherEnteteEntreprise() {
 
@@ -184,9 +183,7 @@ public class Main {
      * Affiche l'en-tête d'une table contenant l'inventaire des véhicules.
      *
      * @param disponible Détermine si l'affichage concerne les véhicules disponibles (true)
-     * ou les véhicules loués (false).
-     *
-     *
+     *                   ou les véhicules loués (false).
      */
     public static void afficherEnteteInventaire(boolean disponible) {
 
@@ -359,9 +356,9 @@ public class Main {
 
     /**
      * Demande la grandeur de véhicule choisi par l'utilisateur.
-     * <p>
      * L'utilisateur doit entrer "P" (Petit), "I" (Intermédiaire) ou "G" (Grand)
      * sans distinction de casse.
+     *`<p>
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée. (8)
      *
      * @return La grandeur de véhicule valide ("P" (Petit), "I" (Intermédiaire) ou "G" (Grand)).
@@ -393,8 +390,8 @@ public class Main {
 
     /**
      * Demande à l'utilisateur de saisir le nombre de jours de location.
-     * <p>
      * L'utilisateur doit entrer une valeur strictement supérieure à 0 et inférieure ou égale à 30. (9)
+     * <p>
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le nombre de jours de location valide (1 à 30).
@@ -514,7 +511,7 @@ public class Main {
     /**
      * Demande à l'utilisateur s'il souhaite souscrire une assurance.
      * L'utilisateur doit entrer "O" (Oui) ou "N" (Non), sans distinction de casse.
-     *
+     * <p>
      * Si l'entrée est invalide, un message d'erreur est affiché et la saisie est redemandée.
      *
      * @return Le choix d'assurance valide ('o' pour Oui ou 'n' pour Non). (12)
@@ -541,7 +538,21 @@ public class Main {
         return choixAssurance;
     }
 
-    public static int obtenirVoituresDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
+    /**
+     * Calcule le nombre de véhicules disponibles selon le type et la grandeur choisis par le locataire. (3.1)
+     *
+     * @param type      Le type de véhicule choisi ('H' pour Hybride, 'E' pour Électrique).
+     * @param grandeur  La taille du véhicule choisi ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
+     * @param nbLouesHP Nombre de véhicules Hybride Petit loués.
+     * @param nbLouesHI Nombre de véhicules Hybride Intermédiaire loués.
+     * @param nbLouesHG Nombre de véhicules Hybride Grand loués.
+     * @param nbLouesEP Nombre de véhicules Électrique Petit loués.
+     * @param nbLouesEI Nombre de véhicules Électrique Intermédiaire loués.
+     * @param nbLouesEG Nombre de véhicules Électrique Grand loués.
+     * @return Le nombre de véhicules disponibles correspondant aux critères du locataire.
+     */
+
+    public static int calculerVehiculesDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
 
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
@@ -563,7 +574,15 @@ public class Main {
         }
     }
 
-    public static float obtenirPrixLocation(char type, char grandeur) {
+    /**
+     * Calcule le prix de location en fonction du type et de la grandeur du véhicule choisi par le locataire.
+     *
+     * @param type     Le type de véhicule choisi ('H' pour Hybride, 'E' pour Électrique).
+     * @param grandeur La taille du véhicule choisi ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
+     * @return Le prix du véhicule correspondant aux critères du locataire.
+     */
+    public static float calculerPrixLocation(char type, char grandeur) {
+
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
                 return PRIX_HYBRIDE_PETIT;
@@ -584,10 +603,18 @@ public class Main {
         }
     }
 
-    public static float obtenirPrixAssurance(char type, char grandeur, char choixAssurance) {
+    /**
+     * Calcule le prix de l'assurance en fonction du type et de la grandeur du véhicule choisi par le locataire.
+     * Si le locataire refuse l'assurance, la méthode retourne 0. (3)
+     *
+     * @param type           Le type de véhicule choisi ('H' pour Hybride, 'E' pour Électrique).
+     * @param grandeur       La taille du véhicule choisi ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
+     * @param choixAssurance Le choix du locataire ('O' pour Oui, 'N' pour Non).
+     * @return Le prix de l'assurance correspondant aux critères du locataire, ou 0 si l'assurance est refusée.
+     */
+    public static float calculerPrixAssurance(char type, char grandeur, char choixAssurance) {
 
         if (choixAssurance == ASSURANCE_OUI) {
-
             if (type == VEHICULE_HYBRIDE) {
                 if (grandeur == VEHICULE_PETIT) {
                     return ASSURANCE_HYBRIDE_PETIT;
@@ -606,39 +633,74 @@ public class Main {
                     return ASSURANCE_ELECTRIQUE_GRAND;
                 }
             }
-
         } else {
             return 0;
         }
     }
 
-    public static float obtenirRabais(float prixLocation, char type, char grandeur, int nbJourLocation) {
-        float rabaisApplique;
+    /**
+     * Calcule le rabais applicable à la location en fonction du type de véhicule, de sa grandeur
+     * et du nombre de jours de location.
+     * <p>
+     * Si le locataire a choisi un véhicule électrique de petite ou intermédiaire taille et
+     * loue pour plus de `seuilJourRabais` jours, un rabais de `tauxRabais` % est appliqué.
+     *
+     * @param prixLocation    Le prix total de la location avant rabais.
+     * @param type            Le type de véhicule choisi ('H' pour Hybride, 'E' pour Électrique).
+     * @param grandeur        La taille du véhicule choisi ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
+     * @param nbrJourLocation Le nombre de jours de location.
+     * @return Le montant du rabais appliqué, ou 0 si aucun rabais ne s'applique.
+     */
+    public static float calculerRabaisLocation(float prixLocation, char type, char grandeur, int nbrJourLocation) {
+        float rabais;
 
-        if ((type == VEHICULE_ELECTRIQUE && (grandeur == VEHICULE_PETIT || grandeur == VEHICULE_INTERMEDIAIRE)) && nbJourLocation > NBR_JOUR_RABAIS) {
-            rabaisApplique = prixLocation * POURCENTAGE_RABAIS_LOCATION;
+        if ((type == VEHICULE_ELECTRIQUE && (grandeur == VEHICULE_PETIT || grandeur == VEHICULE_INTERMEDIAIRE)) && nbrJourLocation > SEUIL_JOUR_RABAIS) {
+            rabais = prixLocation * TAUX_RABAIS;
         } else {
-            rabaisApplique = 0;
+            rabais = 0;
         }
-        return rabaisApplique;
+        return rabais;
     }
 
-    public static float calculerMontantLocation(int nbrJourLocation, float prixLocation, float rabais) {
+    /**
+     * Calcule le montant total de la location en fonction du nombre de jours loués,
+     * du prix de location du véhicule choisi et d'un rabais éventuel.
+     *
+     * @param nbrJoursLocation Le nombre de jours de location.
+     * @param prixLocation     Le prix de location quotidien du véhicule choisi.
+     * @param rabais           Le rabais journalier appliqué si les critères de réduction sont remplis.
+     * @return Le montant total de la location après application du rabais.
+     */
+    public static float calculerMontantLocation(int nbrJoursLocation, float prixLocation, float rabais) {
         float montantLocation;
 
-        montantLocation = (nbrJourLocation * prixLocation) + (nbrJourLocation * rabais);
+        montantLocation = nbrJoursLocation * (prixLocation - rabais);
 
         return montantLocation;
     }
 
-    public static float calculerMontantAssurance(int nbrJourLocation, float prixAssurance) {
+    /**
+     * Calcule le montant total de l'assurance en fonction du nombre de jours loués.
+     *
+     * @param nbrJoursLocation Le nombre de jours de location.
+     * @param prixAssurance    Le prix d'assurance quotidien du véhicule choisi.
+     * @return Le montant total de l'assurance pour la durée de la location.
+     */
+    public static float calculerMontantAssurance(int nbrJoursLocation, float prixAssurance) {
         float montantAssurance;
 
-        montantAssurance = nbrJourLocation * prixAssurance;
+        montantAssurance = nbrJoursLocation * prixAssurance;
 
         return montantAssurance;
     }
 
+    /**
+     * Calcule le sous-total de la commande, correspondant à la somme du montant de location et du montant d'assurance.
+     *
+     * @param montantLocation  Le montant total de la location en fonction du véhicule et de la durée.
+     * @param montantAssurance Le montant total de l'assurance si applicable.
+     * @return Le sous-total de la facture.
+     */
     public static float calculerSousTotal(float montantLocation, float montantAssurance) {
         float sousTotal;
 
@@ -647,22 +709,42 @@ public class Main {
         return sousTotal;
     }
 
+    /**
+     * Calcule le montant de la TPS à partir du sous-total de la facture.
+     *
+     * @param sousTotal Le sous-total de la facture.
+     * @return Le montant de la TPS.
+     */
     public static float calculerMontantTPS(float sousTotal) {
         float montantTPS;
 
-        montantTPS = sousTotal * POURCENTAGE_TPS;
+        montantTPS = sousTotal * TAUX_TPS;
 
         return montantTPS;
     }
 
+    /**
+     * Calcule le montant de la TVQ à partir du sous-total de la facture.
+     *
+     * @param sousTotal Le sous-total de la facture.
+     * @return Le montant de la TVQ.
+     */
     public static float calculerMontantTVQ(float sousTotal) {
         float montantTVQ;
 
-        montantTVQ = sousTotal * POURCENTAGE_TVQ;
+        montantTVQ = sousTotal * TAUX_TVQ;
 
         return montantTVQ;
     }
 
+    /**
+     * Calcule le montant total de la facture après application de la TPS et de la TVQ.
+     *
+     * @param sousTotal  Le sous-total de la facture (avant taxes).
+     * @param montantTPS Le montant de la TPS.
+     * @param montantTVQ Le montant de la TVQ.
+     * @return Le montant total de la facture après taxes.
+     */
     public static float calculerMontantTotal(float sousTotal, float montantTPS, float montantTVQ) {
         float montantTotal;
 
@@ -671,13 +753,24 @@ public class Main {
         return montantTotal;
     }
 
+
+    /**
+     * Génère un nouveau numéro de facture en incrémentant l'ancien.
+     *
+     * @param ancienNumeroFacture L'ancien numéro de facture.
+     * @return Le nouveau numéro de facture, incrémenté de 1.
+     */
     public static int obtenirNumeroFacture(int ancienNumeroFacture) {
-        int numeroFacture;
 
-        numeroFacture = ++ancienNumeroFacture;
-
-        return numeroFacture;
+        return ancienNumeroFacture + 1;
     }
+
+    /**
+     * Calcule l'heure de début de location, qui commence 3 heures après le moment actuel.
+     *
+     * @param tempsMaintenant L'instant actuel en date et heure.
+     * @return L'heure de début de location formatée, avec un décalage de 3 heures.
+     */
 
     private static String calculerDebutLocation(LocalDateTime tempsMaintenant) {
         String tempsDebutLocation;
@@ -688,6 +781,15 @@ public class Main {
 
     }
 
+    /**
+     * Calcule la date et l'heure de fin de la location en ajoutant le nombre de jours et 3 heures supplémentaires.
+     *
+     * @param tempsMaintenant  L'instant actuel en date et heure.
+     * @param nbrJourLocation  Le nombre de jours de location.
+     *
+     * @return La date et l'heure de fin de location formatées en chaîne de caractères.
+     */
+
     private static String calculerFinLocation(LocalDateTime tempsMaintenant, int nbrJourLocation) {
         String tempsFinLocation;
 
@@ -696,15 +798,31 @@ public class Main {
         return tempsFinLocation;
     }
 
-    public static int incrementerVehiculeLoue(char typeChoisi, char typeCible, char grandeurChoisi, char grandeurCible, int nbrVehiculeChoisi) {
-        if (typeChoisi == typeCible && grandeurChoisi == grandeurCible) {
-            nbrVehiculeChoisi++;
-            return nbrVehiculeChoisi;
-        } else {
-            return nbrVehiculeChoisi;
+    /**
+     * Incrémente le nombre de véhicules loués si le type et la grandeur correspondent aux critères ciblés.
+     *
+     * @param typeChoisie       Le type de véhicule choisi par le locataire.
+     * @param typeCible         Le type de véhicule ciblé par l'incrémentation.
+     * @param grandeurChoisie   La grandeur de véhicule choisie par le locataire.
+     * @param grandeurCible     La grandeur de véhicule ciblée par l'incrémentation.
+     * @param nbrVehiculesLoues Le nombre de véhicules loués précédemment.
+     * @return Le nombre de véhicules loués après l'incrémentation si les critères correspondent.
+     */
+
+    public static int incrementerVehiculeLoue(char typeChoisie, char typeCible, char grandeurChoisie, char grandeurCible, int nbrVehiculesLoues) {
+        if (typeChoisie == typeCible && grandeurChoisie == grandeurCible) {
+            nbrVehiculesLoues++;
         }
+        return nbrVehiculesLoues;
     }
 
+
+    /**
+     * Retourne la description liée au type de véhicule.
+     *
+     * @param type Le type de véhicule ('H' pour Hybride, 'E' pour Électrique).
+     * @return La description textuelle du type de véhicule ("Hybride" ou "Électrique").
+     */
     private static String obtenirDescriptionType(char type) {
         String description;
 
@@ -717,6 +835,12 @@ public class Main {
         return description;
     }
 
+    /**
+     * Retourne la description liée à la grandeur du véhicule.
+     *
+     * @param grandeur Le type de véhicule ('P' pour Petit, 'I' pour Intermédiaire et 'G' pour Grand).
+     * @return La description textuelle du type de véhicule ("Petit", "Intermédiaire", "Grand").
+     */
     private static String obtenirDescriptionGrandeur(char grandeur) {
         String description;
 
@@ -731,6 +855,12 @@ public class Main {
         return description;
     }
 
+    /**
+     * Retourne la description liée au mode de paiement.
+     *
+     * @param modePaiement Le mode de paiement ('D' pour Débit et 'C' pour Crédit).
+     * @return La description textuelle du mode de paiement ('D' pour Débit et 'C' pour Crédit).
+     */
     private static String obtenirDescriptionModePaiement(char modePaiement) {
         String description;
 
@@ -743,6 +873,12 @@ public class Main {
         return description;
     }
 
+    /**
+     * Retourne la description liée au type de carte de crédit.
+     *
+     * @param carteCredit La carte de crédit ('V' pour Visa et 'M' pour MasterCard).
+     * @return La description textuelle du type de carte de crédit ('V' pour Visa et 'M' pour MasterCard).
+     */
     private static String obtenirDescriptionCarteCredit(char carteCredit) {
         String description;
 
@@ -755,10 +891,20 @@ public class Main {
         return description;
     }
 
+    /**
+     * Affiche sous forme de tableau le nombre de véhicules disponibles pour chaque type et grandeur de véhicule.
+     * <p>
+     * Le calcul des véhicules disponibles est effectué en soustrayant le nombre de véhicules loués du nombre total disponible.
+     *
+     * @param nbLouesHP Nombre de véhicules Hybride Petit loués.
+     * @param nbLouesHI Nombre de véhicules Hybride Intermédiaire loués.
+     * @param nbLouesHG Nombre de véhicules Hybride Grand loués.
+     * @param nbLouesEP Nombre de véhicules Électrique Petit loués.
+     * @param nbLouesEI Nombre de véhicules Électrique Intermédiaire loués.
+     * @param nbLouesEG Nombre de véhicules Électrique Grand loués.
+     */
 
     public static void afficherVehiculeDisponible(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
-
-// jupdate ensuite jenleve encoreiue45r
 
         System.out.printf("Petit %15d %15d", (nbDisponiblesHP - nbLouesHP), (nbDisponiblesEP - nbLouesEP));
         System.out.printf("\nIntermédiaire %7d %15d", (nbDisponiblesHI - nbLouesHI), (nbDisponiblesEI - nbLouesEI));
@@ -767,6 +913,33 @@ public class Main {
 
     }
 
+    /**
+     * Affiche la facture détaillée d'un locataire, incluant ses informations personnelles,
+     * le véhicule loué, la durée de location, le mode de paiement et les montants calculés.
+     * <p>
+     * Si le paiement a été effectué par carte de crédit, seul le dernier bloc de chiffres du numéro est affiché.
+     *
+     * @param numeroFacture        Le numéro de facture unique.
+     * @param prenomLocataire      Le prénom du locataire.
+     * @param nomLocataire         Le nom de famille du locataire.
+     * @param telephoneLocataire   Le numéro de téléphone du locataire.
+     * @param permisLocataire      Le numéro de permis de conduire du locataire.
+     * @param typeVehicule         Le type de véhicule loué ('H' pour Hybride, 'E' pour Électrique).
+     * @param grandeurVehicule     La taille du véhicule loué ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
+     * @param modePaiement         Le mode de paiement utilisé ('D' pour Débit, 'C' pour Crédit).
+     * @param typeCarteCredit      Le type de carte de crédit utilisée (si applicable).
+     * @param numeroCarteCredit    Le numéro de carte de crédit masqué (si applicable).
+     * @param nbrJourLocation      Le nombre de jours de location.
+     * @param prixLocationParJour  Le prix journalier de la location du véhicule.
+     * @param prixAssuranceParJour Le prix journalier de l'assurance (si souscrite).
+     * @param rabais               Le rabais appliqué (si applicable).
+     * @param montantLocation      Le montant total de la location avant assurance et taxes.
+     * @param montantAssurance     Le coût total de l'assurance.
+     * @param sousTotalFacture     Le sous-total avant taxes.
+     * @param montantTPS           Le montant de la taxe TPS.
+     * @param montantTVQ           Le montant de la taxe TVQ.
+     * @param montantTotalFacture  Le montant total à payer après taxes.
+     */
     public static void afficherFacture(int numeroFacture,
                                        String prenomLocataire,
                                        String nomLocataire,
@@ -788,49 +961,58 @@ public class Main {
                                        float montantTVQ,
                                        float montantTotalFacture
     ) {
-        String numeroCarteCreditCache;
+
         afficherEnteteEntreprise();
         LocalDateTime now = LocalDateTime.now();
 
+        // Affichage de l'en-tête de la facture
         System.out.println("Facture No :    " + numeroFacture);
         System.out.println(SEPARATEUR_LIGNE);
 
+        // Affichage des informations du locataire
         System.out.println();
         System.out.println("Prénom et nom : " + prenomLocataire + " " + nomLocataire);
         System.out.println("Téléphone : " + telephoneLocataire);
         System.out.println("Permis de conduire : " + permisLocataire);
-
         System.out.println();
 
+        // Affichage des informations sur le véhicule loué
         System.out.print("Type de véhicule : " + obtenirDescriptionType(typeVehicule));
         System.out.println();
         System.out.print("Grandeur du véhicule : " + obtenirDescriptionGrandeur(grandeurVehicule));
         System.out.println();
 
-        // Dates de début et de retour du location
+        //  // Génération et affichage des dates de location et de retour
         System.out.println();
         System.out.println("Nombre de jours de location : " + nbrJourLocation);
         System.out.println("Date de location : " + calculerDebutLocation(now));
         System.out.println("Date de retour   : " + calculerFinLocation(now, nbrJourLocation));
 
-        // Mode de paiement
+        // Affichage du mode de paiement
         System.out.print("\nMode de paiement : " + obtenirDescriptionModePaiement(modePaiement));
 
+        // Si le paiement est effectué par carte de crédit, afficher les informations de la carte
         if (modePaiement == CARTE_CREDIT) {
             System.out.println();
-            numeroCarteCreditCache = "XXXX XXXX XXXX " + numeroCarteCredit.substring(15, 19);
+
+            // Masque les 12 premiers chiffres du numéro de carte de crédit pour des raisons de sécurité
+            String numeroCarteCreditCache = "XXXX XXXX XXXX " + numeroCarteCredit.substring(15, 19);
             System.out.println("Type de la carte de crédit : " + obtenirDescriptionCarteCredit(typeCarteCredit));
             System.out.println("Numéro de la carte de crédit : " + numeroCarteCreditCache);
         } else {
             System.out.println();
         }
+
+        // Affichage des coûts journaliers
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_LOCATION, prixLocationParJour);
         System.out.printf("\n%-34s %.2f$", MESSAGE_PRIX_ASSURANCE, prixAssuranceParJour);
 
+        // Si un rabais est appliqué, l'afficher
         if (rabais > 0) {
             System.out.printf("\n%-34s %.2f$", MESSAGE_RABAIS_LOCATION, rabais);
         }
 
+        // Affichage des coûts totaux
         System.out.printf("\n\n%-34s %.2f$", MESSAGE_MONTANT_LOCATION_SOUS_TOTAL, montantLocation);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_ASSURANCE, montantAssurance);
         System.out.printf("\n\n%-34s %.2f$", MESSAGE_SOUS_TOTAL, sousTotalFacture);
@@ -838,6 +1020,7 @@ public class Main {
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TVQ, montantTVQ);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TOTAL, (montantTotalFacture));
 
+        // Affichage du message de remerciement
         System.out.println();
         System.out.println(SEPARATEUR_LIGNE);
         System.out.println(MESSAGE_REMERCIEMENT);
@@ -845,6 +1028,16 @@ public class Main {
 
     }
 
+    /**
+     * Affiche sous forme de tableau le nombre de véhicules louées pour chaque type et grandeur de véhicule.
+     *
+     * @param nbLouesHP Nombre de véhicules Hybride Petit loués.
+     * @param nbLouesHI Nombre de véhicules Hybride Intermédiaire loués.
+     * @param nbLouesHG Nombre de véhicules Hybride Grand loués.
+     * @param nbLouesEP Nombre de véhicules Électrique Petit loués.
+     * @param nbLouesEI Nombre de véhicules Électrique Intermédiaire loués.
+     * @param nbLouesEG Nombre de véhicules Électrique Grand loués.
+     */
     public static void afficherVehiculeLoues(int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
         System.out.printf("Petit %15d %15d", nbLouesHP, nbLouesEP);
         System.out.printf("\nIntermédiaire %7d %15d", nbLouesHI, nbLouesEI);
@@ -852,24 +1045,38 @@ public class Main {
         System.out.println(SEPARATEUR_LIGNE);
     }
 
-    public static boolean verifieVoitureChoisiDisponible(int nbrDisponible) {
-        boolean vehiculeEstDisponible;
+    /**
+     * Affiche un message en fonction du nombre de voitures disponibles restantes.
+     *
+     * Cette méthode déclenche le retour au menu principal s'il ne reste aucun véhicule disponible.
+     *
+     * @param nbrDisponible Le nombre de voitures disponibles.
+     *
+     * @return true s'il n'y a plus de voitures disponibles, false s'il en reste.
+     */
 
-        if (nbrDisponible != 0) {
+
+    public static boolean declencherRetourMenuPrincipal(int nbrDisponible) {
+
+        if (nbrDisponible > 0) {
 
             System.out.println(nbrDisponible + " véhicules de ce type et de cette grandeur sont disponibles !\n");
-            vehiculeEstDisponible = false;
+            return false;
 
         } else {
 
             System.out.print("Aucun véhicule de ce type et de cette grandeur n'est disponible !");
-            vehiculeEstDisponible = true;
-
+            return true;
         }
-        return vehiculeEstDisponible;
+
     }
 
-    public static boolean retourMenu() {
+    /**
+     * Attend que l'utilisateur appuie sur Entrée pour revenir au menu principal.
+     *
+     * @return Toujours true une fois que l'utilisateur a appuyé sur Entrée.
+     */
+    public static boolean retournerMenu() {
         boolean enterIsPressed;
         System.out.println();
         System.out.println();
@@ -881,22 +1088,33 @@ public class Main {
 
     }
 
+    /**
+     * Point d'entrée du programme de location de véhicules.
+     * Gère le menu principal et les interactions avec l'utilisateur.
+     *
+     * @param args Arguments de ligne de commande (non utilisés dans cette application).
+     */
     public static void main(String[] args) {
+        // Déclaration des variables //
 
+        // Choix et saisi de l'utilisateur
         byte choixMenu;
-
-
+        char modePaiementLocataire;
+        char carteCreditLocataire = ' ';
+        String numeroCarteLocataire = null;
         char typeVehiculeChoisi;
         char grandeurVehiculeChoisi;
         int jourLocation;
+        char choixAssuranceLocataire;
+
+        // Information du locataire
         String prenomLocataire;
         String nomLocataire;
         String telephoneLocataire;
         String permisLocataire;
-        char modePaiementLocataire;
-        char carteCreditLocataire = ' ';
-        String numeroCarteLocataire = null;
-        char choixAssuranceLocataire;
+
+
+        // Informations liées à la facture
         int NumeroFacture = 0;
         float prixLocationParJour;
         float prixAssuranceParJour;
@@ -908,8 +1126,11 @@ public class Main {
         float montantTVQLocation;
         float montantTotalLocation;
 
-
+        // Actionner le retour au menu
         boolean enterIsPressed = false;
+        int nbrDisponibleVehiculeChoisi;
+
+        //Initiation du nombre de véhicule loué
         int nbLouesHP = 0;
         int nbLouesHI = 0;
         int nbLouesHG = 0;
@@ -918,37 +1139,43 @@ public class Main {
         int nbLouesEG = 0;
 
 
-        int nbrDisponibleVehiculeChoisi;
+        // Affichage //
 
+        // Affichage du message de bievenu
         afficherMessageBievenue();
 
         do {
+
+            // Affichage du menu principal et lecture du choix de l'utilisateur
             afficherOptionsMenu();
             choixMenu = lireChoixMenu();
             enterIsPressed = false;
 
-            while (enterIsPressed == false) {
+            // Tant que l'utilisateur n'a pas appuyé sur Entrée, il reste dans l'option choisie
+            while (!enterIsPressed) {
 
+                // Gestion des différentes options du menu
                 switch (choixMenu) {
-                    // Afficher l'inventaire des voitures disponibles
-                    case 1:
+                    case 1: // Afficher l'inventaire des voitures disponibles
                         afficherEnteteEntreprise();
                         afficherEnteteInventaire(true);
-
                         afficherVehiculeDisponible(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
                         break;
-                    // Louer une voiture selon sa taille, son type, sa disponibilité et valider les modalités de paiement
-                    case 2:
+
+
+                    case 2: // Louer une voiture et générer une facture
                         typeVehiculeChoisi = lireTypeVehicule();
                         grandeurVehiculeChoisi = saisiGrandeurVehicule();
-                        nbrDisponibleVehiculeChoisi = obtenirVoituresDisponibles(typeVehiculeChoisi, grandeurVehiculeChoisi, nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
-                        enterIsPressed = verifieVoitureChoisiDisponible(nbrDisponibleVehiculeChoisi);
+                        nbrDisponibleVehiculeChoisi = calculerVehiculesDisponibles(typeVehiculeChoisi, grandeurVehiculeChoisi, nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
 
-                        if (enterIsPressed == true) {
+                        // Si aucun véhicule n'est disponible, retour au menu principal
+                        enterIsPressed = declencherRetourMenuPrincipal(nbrDisponibleVehiculeChoisi);
+                        if (enterIsPressed) {
                             break;
                         }
 
 
+                        // Mise à jour du nombre de véhicules loués selon le type et la grandeur
                         nbLouesHP = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_PETIT, nbLouesHP);
                         nbLouesHI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbLouesHI);
                         nbLouesHG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_HYBRIDE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbLouesHG);
@@ -957,6 +1184,7 @@ public class Main {
                         nbLouesEI = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_INTERMEDIAIRE, nbLouesEI);
                         nbLouesEG = incrementerVehiculeLoue(typeVehiculeChoisi, VEHICULE_ELECTRIQUE, grandeurVehiculeChoisi, VEHICULE_GRAND, nbLouesEG);
 
+                        // Lecture des informations du locataire
                         jourLocation = lireNombreJourLocation();
                         prenomLocataire = lirePrenomUtilisateur();
                         nomLocataire = lireNomLocataire();
@@ -964,18 +1192,19 @@ public class Main {
                         permisLocataire = lirePermisConduire();
                         modePaiementLocataire = lireModePaiement();
 
+                        // Si le paiement est par carte de crédit, lecture des informations de la carte
                         if (modePaiementLocataire == CARTE_CREDIT) {
                             carteCreditLocataire = lireCarteCredit();
                             numeroCarteLocataire = saisiNumeroCarteCredit();
                         } else {
-                            carteCreditLocataire = 'c';
+                            carteCreditLocataire = 'c'; // Valeur par défaut (Qu'est-ce que je peux mettre à la place)
                         }
 
-
+                        // Calcul des montants pour la facture
                         choixAssuranceLocataire = lireChoixAssurance();
-                        prixLocationParJour = obtenirPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
-                        prixAssuranceParJour = obtenirPrixAssurance(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
-                        rabaisLocation = obtenirRabais(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
+                        prixLocationParJour = calculerPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
+                        prixAssuranceParJour = calculerPrixAssurance(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
+                        rabaisLocation = calculerRabaisLocation(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
                         montantLocation = calculerMontantLocation(jourLocation, prixLocationParJour, rabaisLocation);
                         montantAssurance = calculerMontantAssurance(jourLocation, prixAssuranceParJour);
                         sousTotalLocation = calculerSousTotal(montantLocation, montantAssurance);
@@ -983,6 +1212,8 @@ public class Main {
                         montantTVQLocation = calculerMontantTVQ(sousTotalLocation);
                         montantTotalLocation = calculerMontantTotal(sousTotalLocation, montantTPSLocation, montantTVQLocation);
                         NumeroFacture = obtenirNumeroFacture(NumeroFacture);
+
+                        // Affichage de la facture finale
                         afficherFacture(
                                 NumeroFacture,
                                 prenomLocataire,
@@ -1006,18 +1237,21 @@ public class Main {
                                 montantTotalLocation
                         );
                         break;
-                    case 3:
+
+
+                    case 3: // Afficher les voitures louées
                         afficherEnteteEntreprise();
                         afficherEnteteInventaire(false);
                         afficherVehiculeLoues(nbLouesHP, nbLouesHI, nbLouesHG, nbLouesEP, nbLouesEI, nbLouesEG);
                         break;
-                    // Quitter le programme
-                    case 4:
+
+                    case 4: // Quitter le programme
                         System.out.println("\n\nMerci et à la prochaine !");
                 }
 
-                enterIsPressed = retourMenu();
-                if (enterIsPressed == true) {
+                // Attente de l'utilisateur avant de retourner au menu
+                enterIsPressed = retournerMenu();
+                if (enterIsPressed) {
                     break;
                 }
             }
