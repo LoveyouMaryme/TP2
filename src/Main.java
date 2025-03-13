@@ -27,9 +27,11 @@ public class Main {
     //Messages affichés
     public static final String MESSAGE_MENU_CHOIX = "*** Menu de choix ***";
     public static final String SEPARATEUR_LIGNE = "-----------------------------------------------------------";
+    public static final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
+    public static final String MESSAGE_BIENVENUE = "Bienvenue dans le système de facturation de " + NOM_ENTREPRISE;
+    public static  final String ENCADRE_TITRE = "---------------------------------------------------------------------------------";
     public static final String ADRESSE_ENTREPRISE = "1500 rue Matata, Hakuna, Québec Y0Z 6Y7";
     public static final String TELEPHONE_ENTREPRISE = "438 222-1111";
-    public static final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
     public static final String MESSAGE_PRIX_LOCATION = "Prix de la location par jour";
     public static final String MESSAGE_PRIX_ASSURANCE = "Prix de l'assurance par jour";
     public static final String MESSAGE_RABAIS_LOCATION = "Rabais sur le prix de la location";
@@ -74,6 +76,20 @@ public class Main {
     public static final char VISA_CARTE_CREDIT = 'v';
     public static final char MC_CARTE_CREDIT = 'm';
 
+    public static final String VEHICULE_HYBRIDE_DESCRIPTION = "Hybride";
+    public static final String VEHICULE_ELECTRIQUE_DESCRIPTION = "Électrique";
+    public static final String VEHICULE_PETIT_DESCRIPTION = "Petit";
+    public static final String VEHICULE_INTERMEDIAIRE_DESCRIPTION  = "Intermédiaire";
+    public static final String VEHICULE_GRAND_DESCRIPTION = "Grand";
+    public static final String CARTE_CREDIT_DESCRIPTION = "Crédit";
+    public static final String CARTE_DEBIT_DESCRIPTION = "Débit";
+    public static final String CREDIT_VISA_DESCRIPTION = "Visa";
+    public static final String CREDIT_MASTERCARD_DESCRIPTION = "MasterCard";
+
+
+    public static final String FORMAT_TELEPHONE = "([0-9]{1,3}) [0-9]{1,3}-[0-9]{1,4}";
+    public static final String FORMAT_PERMIS ="[A-Za-z][0-9]{1,4}-[0-9]{1,6}-[0-9]{1,2}";
+
     // Invetaire de voitures disponibles au départ
     public static final int nbDisponiblesHP = 12;
     public static final int nbDisponiblesHI = 10;
@@ -93,15 +109,6 @@ public class Main {
     public static final int SEUIL_JOUR_RABAIS = 15;
 
 
-    // Vérification du numéro de téléphone
-    public static final int MAX_CHAR_TELEPHONE = 14;
-    public static final char PARANTHESE_OUVRANTE = '(';
-    public static final char PARANTHESE_FERMANTE = ')';
-    public static final char TRAIT_UNION = '-';
-    public static final byte POS_PARANTHESE_OUVRANTE_TEL = 0;
-    public static final byte POS_PARANTHESE_FERMANTE_TEL = 4;
-    public static final byte POS_TRAIT_UNION_TEL = 9;
-
     // Formatter les dates
     public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM:SS");
 
@@ -109,10 +116,6 @@ public class Main {
      * Affiche un message de bienvenue pour l'entreprise Roulons les Véhicules Verts (RVV) (1)
      */
     public static void afficherMessageBievenue() {
-        final String NOM_ENTREPRISE = "Roulons les Véhicules Verts (RVV)";
-        final String MESSAGE_BIENVENUE = "Bienvenue dans le système de facturation de " + NOM_ENTREPRISE;
-        final String ENCADRE_TITRE = "---------------------------------------------------------------------------------";
-
         System.out.println(ENCADRE_TITRE);
         System.out.println(MESSAGE_BIENVENUE);
         System.out.println(ENCADRE_TITRE);
@@ -121,7 +124,7 @@ public class Main {
     /**
      * Affiche les quatre options du menu principal de l'application.
      */
-    public static void afficherOptionsMenu() {
+    private static void afficherOptionsMenu() {
 
         System.out.println();
         System.out.println();
@@ -165,7 +168,7 @@ public class Main {
      * Affiche l'en-tête contenant les informations de l'entreprise,
      * incluant le nom, l'adresse, le téléphone et la date/heure actuelle.
      */
-    public static void afficherEnteteEntreprise() {
+    private static void afficherEnteteEntreprise() {
 
 
         LocalDateTime now = LocalDateTime.now();
@@ -185,7 +188,7 @@ public class Main {
      * @param disponible Détermine si l'affichage concerne les véhicules disponibles (true)
      *                   ou les véhicules loués (false).
      */
-    public static void afficherEnteteInventaire(boolean disponible) {
+    private static void afficherEnteteInventaire(boolean disponible) {
 
         System.out.println(SEPARATEUR_LIGNE);
         if (disponible) {
@@ -275,11 +278,7 @@ public class Main {
             telephone = Clavier.lireString().trim();
 
 
-            if (telephone.length() == MAX_CHAR_TELEPHONE
-                    && telephone.charAt(POS_PARANTHESE_OUVRANTE_TEL) == PARANTHESE_OUVRANTE
-                    && telephone.charAt(POS_PARANTHESE_FERMANTE_TEL) == PARANTHESE_FERMANTE
-                    && telephone.charAt(POS_TRAIT_UNION_TEL) == TRAIT_UNION) {
-
+            if (telephone.matches(FORMAT_TELEPHONE)) {
                 estTelephoneValide = true;
             } else {
                 System.out.println();
@@ -309,7 +308,7 @@ public class Main {
             System.out.print("Entrez le numéro de permis de conduire du locataire (Exemple : D1234-567891-23): ");
             numeroPermis = Clavier.lireString().trim();
 
-            if (numeroPermis.matches("[A-Za-z][0-9]{1,4}-[0-9]{1,6}-[0-9]{1,2}")) {
+            if (numeroPermis.matches(FORMAT_PERMIS)) {
                 estPermisValide = true;
             } else {
                 System.out.println();
@@ -553,25 +552,27 @@ public class Main {
      */
 
     public static int calculerVehiculesDisponibles(char type, char grandeur, int nbLouesHP, int nbLouesHI, int nbLouesHG, int nbLouesEP, int nbLouesEI, int nbLouesEG) {
-
+        int nbrDisponible;
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
-                return nbDisponiblesHP - nbLouesHP;
+                nbrDisponible = nbDisponiblesHP - nbLouesHP;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbDisponiblesHI - nbLouesHI;
+                nbrDisponible =  nbDisponiblesHI - nbLouesHI;
             } else {
-                return nbDisponiblesHG - nbLouesHG;
+                nbrDisponible =  nbDisponiblesHG - nbLouesHG;
             }
 
         } else {
             if (grandeur == VEHICULE_PETIT) {
-                return nbDisponiblesEP - nbLouesEP;
+                nbrDisponible =  nbDisponiblesEP - nbLouesEP;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return nbDisponiblesEI - nbLouesEI;
+                nbrDisponible =  nbDisponiblesEI - nbLouesEI;
             } else {
-                return nbDisponiblesEG - nbLouesEG;
+                nbrDisponible =  nbDisponiblesEG - nbLouesEG;
             }
         }
+
+        return nbrDisponible;
     }
 
     /**
@@ -581,26 +582,29 @@ public class Main {
      * @param grandeur La taille du véhicule choisi ('P' pour Petit, 'I' pour Intermédiaire, 'G' pour Grand).
      * @return Le prix du véhicule correspondant aux critères du locataire.
      */
-    public static float calculerPrixLocation(char type, char grandeur) {
+    public static float calculerPrixLocationQuotidien(char type, char grandeur) {
+        float prixQuotidien;
 
         if (type == VEHICULE_HYBRIDE) {
             if (grandeur == VEHICULE_PETIT) {
-                return PRIX_HYBRIDE_PETIT;
+                prixQuotidien =  PRIX_HYBRIDE_PETIT;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return PRIX_HYBRIDE_INTERMEDIAIRE;
+                prixQuotidien =  PRIX_HYBRIDE_INTERMEDIAIRE;
             } else {
-                return PRIX_HYBRIDE_GRAND;
+                prixQuotidien = PRIX_HYBRIDE_GRAND;
             }
 
         } else {
             if (grandeur == VEHICULE_PETIT) {
-                return PRIX_ELECTRIQUE_PETIT;
+                prixQuotidien = PRIX_ELECTRIQUE_PETIT;
             } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                return PRIX_ELECTRIQUE_INTERMEDIAIRE;
+                prixQuotidien = PRIX_ELECTRIQUE_INTERMEDIAIRE;
             } else {
-                return PRIX_ELECTRIQUE_GRAND;
+                prixQuotidien = PRIX_ELECTRIQUE_GRAND;
             }
         }
+
+        return prixQuotidien;
     }
 
     /**
@@ -612,30 +616,32 @@ public class Main {
      * @param choixAssurance Le choix du locataire ('O' pour Oui, 'N' pour Non).
      * @return Le prix de l'assurance correspondant aux critères du locataire, ou 0 si l'assurance est refusée.
      */
-    public static float calculerPrixAssurance(char type, char grandeur, char choixAssurance) {
-
+    public static float calculerPrixAssuranceQuotidien(char type, char grandeur, char choixAssurance) {
+        float prixAssuranceQuotidien;
         if (choixAssurance == ASSURANCE_OUI) {
             if (type == VEHICULE_HYBRIDE) {
                 if (grandeur == VEHICULE_PETIT) {
-                    return ASSURANCE_HYBRIDE_PETIT;
+                    prixAssuranceQuotidien = ASSURANCE_HYBRIDE_PETIT;
                 } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                    return ASSURANCE_HYBRIDE_INTERMEDIAIRE;
+                    prixAssuranceQuotidien = ASSURANCE_HYBRIDE_INTERMEDIAIRE;
                 } else {
-                    return ASSURANCE_HYBRIDE_GRAND;
+                    prixAssuranceQuotidien =  ASSURANCE_HYBRIDE_GRAND;
                 }
 
             } else {
                 if (grandeur == VEHICULE_PETIT) {
-                    return ASSURANCE_ELECTRIQUE_PETIT;
+                    prixAssuranceQuotidien = ASSURANCE_ELECTRIQUE_PETIT;
                 } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-                    return ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
+                    prixAssuranceQuotidien = ASSURANCE_ELECTRIQUE_INTERMEDIAIRE;
                 } else {
-                    return ASSURANCE_ELECTRIQUE_GRAND;
+                    prixAssuranceQuotidien = ASSURANCE_ELECTRIQUE_GRAND;
                 }
             }
         } else {
-            return 0;
+            prixAssuranceQuotidien = 0;
         }
+
+        return prixAssuranceQuotidien;
     }
 
     /**
@@ -651,7 +657,7 @@ public class Main {
      * @param nbrJourLocation Le nombre de jours de location.
      * @return Le montant du rabais appliqué, ou 0 si aucun rabais ne s'applique.
      */
-    public static float calculerRabaisLocation(float prixLocation, char type, char grandeur, int nbrJourLocation) {
+    public static float calculerRabaisLocationQuotidien(float prixLocation, char type, char grandeur, int nbrJourLocation) {
         float rabais;
 
         if ((type == VEHICULE_ELECTRIQUE && (grandeur == VEHICULE_PETIT || grandeur == VEHICULE_INTERMEDIAIRE)) && nbrJourLocation > SEUIL_JOUR_RABAIS) {
@@ -664,17 +670,17 @@ public class Main {
 
     /**
      * Calcule le montant total de la location en fonction du nombre de jours loués,
-     * du prix de location du véhicule choisi et d'un rabais éventuel.
+     * du prix de location du véhicule choisi et d'un rabaisQuotidien éventuel.
      *
      * @param nbrJoursLocation Le nombre de jours de location.
-     * @param prixLocation     Le prix de location quotidien du véhicule choisi.
-     * @param rabais           Le rabais journalier appliqué si les critères de réduction sont remplis.
-     * @return Le montant total de la location après application du rabais.
+     * @param prixLocationQuotidien     Le prix de location quotidien du véhicule choisi.
+     * @param rabaisQuotidien           Le rabaisQuotidien journalier appliqué si les critères de réduction sont remplis.
+     * @return Le montant total de la location après application du rabaisQuotidien.
      */
-    public static float calculerMontantLocation(int nbrJoursLocation, float prixLocation, float rabais) {
+    public static float calculerMontantLocation(int nbrJoursLocation, float prixLocationQuotidien, float rabaisQuotidien) {
         float montantLocation;
 
-        montantLocation = nbrJoursLocation * (prixLocation - rabais);
+        montantLocation = nbrJoursLocation * (prixLocationQuotidien - rabaisQuotidien);
 
         return montantLocation;
     }
@@ -683,13 +689,13 @@ public class Main {
      * Calcule le montant total de l'assurance en fonction du nombre de jours loués.
      *
      * @param nbrJoursLocation Le nombre de jours de location.
-     * @param prixAssurance    Le prix d'assurance quotidien du véhicule choisi.
+     * @param prixAssuranceQuotidien    Le prix d'assurance quotidien du véhicule choisi.
      * @return Le montant total de l'assurance pour la durée de la location.
      */
-    public static float calculerMontantAssurance(int nbrJoursLocation, float prixAssurance) {
+    public static float calculerMontantAssurance(int nbrJoursLocation, float prixAssuranceQuotidien) {
         float montantAssurance;
 
-        montantAssurance = nbrJoursLocation * prixAssurance;
+        montantAssurance = nbrJoursLocation * prixAssuranceQuotidien;
 
         return montantAssurance;
     }
@@ -827,9 +833,9 @@ public class Main {
         String description;
 
         if (type == VEHICULE_HYBRIDE) {
-            description = "Hybride";
+            description = VEHICULE_HYBRIDE_DESCRIPTION;
         } else {
-            description = "Électrique";
+            description = VEHICULE_ELECTRIQUE_DESCRIPTION;
         }
 
         return description;
@@ -845,11 +851,11 @@ public class Main {
         String description;
 
         if (grandeur == VEHICULE_PETIT) {
-            description = "Petit";
+            description = VEHICULE_PETIT_DESCRIPTION;
         } else if (grandeur == VEHICULE_INTERMEDIAIRE) {
-            description = "Intermediaire";
+            description = VEHICULE_INTERMEDIAIRE_DESCRIPTION;
         } else {
-            description = "Grand";
+            description = VEHICULE_GRAND_DESCRIPTION;
         }
 
         return description;
@@ -865,9 +871,9 @@ public class Main {
         String description;
 
         if (modePaiement == CARTE_CREDIT) {
-            description = "Crédit";
+            description = CARTE_CREDIT_DESCRIPTION;
         } else {
-            description = "Débit";
+            description = CARTE_DEBIT_DESCRIPTION;
         }
 
         return description;
@@ -883,9 +889,9 @@ public class Main {
         String description;
 
         if (carteCredit == VISA_CARTE_CREDIT) {
-            description = "Visa";
+            description = CREDIT_VISA_DESCRIPTION;
         } else {
-            description = "MasterCard";
+            description = CREDIT_MASTERCARD_DESCRIPTION;
         }
 
         return description;
@@ -1018,7 +1024,7 @@ public class Main {
         System.out.printf("\n\n%-34s %.2f$", MESSAGE_SOUS_TOTAL, sousTotalFacture);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TPS, montantTPS);
         System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TVQ, montantTVQ);
-        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TOTAL, (montantTotalFacture));
+        System.out.printf("\n%-34s %.2f$", MESSAGE_MONTANT_TOTAL, montantTotalFacture);
 
         // Affichage du message de remerciement
         System.out.println();
@@ -1047,28 +1053,26 @@ public class Main {
 
     /**
      * Affiche un message en fonction du nombre de voitures disponibles restantes.
-     *
+     * <p>
      * Cette méthode déclenche le retour au menu principal s'il ne reste aucun véhicule disponible.
      *
      * @param nbrDisponible Le nombre de voitures disponibles.
      *
      * @return true s'il n'y a plus de voitures disponibles, false s'il en reste.
      */
-
-
-    public static boolean declencherRetourMenuPrincipal(int nbrDisponible) {
-
+    private static boolean declencherRetourMenuPrincipal(int nbrDisponible) {
+        boolean estDisponible;
         if (nbrDisponible > 0) {
 
             System.out.println(nbrDisponible + " véhicules de ce type et de cette grandeur sont disponibles !\n");
-            return false;
+            estDisponible =  false;
 
         } else {
 
             System.out.print("Aucun véhicule de ce type et de cette grandeur n'est disponible !");
-            return true;
+             estDisponible = true;
         }
-
+        return estDisponible;
     }
 
     /**
@@ -1076,15 +1080,13 @@ public class Main {
      *
      * @return Toujours true une fois que l'utilisateur a appuyé sur Entrée.
      */
-    public static boolean retournerMenu() {
-        boolean enterIsPressed;
+    private static boolean retournerMenu() {
         System.out.println();
         System.out.println();
         System.out.print("Appuyer sur <ENTREE> pour réafficher le menu...");
         Clavier.lireFinLigne();
-        enterIsPressed = true;
 
-        return enterIsPressed;
+        return true;
 
     }
 
@@ -1100,7 +1102,7 @@ public class Main {
         // Choix et saisi de l'utilisateur
         byte choixMenu;
         char modePaiementLocataire;
-        char carteCreditLocataire = ' ';
+        char carteCreditLocataire;
         String numeroCarteLocataire = null;
         char typeVehiculeChoisi;
         char grandeurVehiculeChoisi;
@@ -1127,10 +1129,10 @@ public class Main {
         float montantTotalLocation;
 
         // Actionner le retour au menu
-        boolean enterIsPressed = false;
+        boolean enterIsPressed;
         int nbrDisponibleVehiculeChoisi;
 
-        //Initiation du nombre de véhicule loué
+        //Initiation du nombre de véhicules loués
         int nbLouesHP = 0;
         int nbLouesHI = 0;
         int nbLouesHG = 0;
@@ -1141,7 +1143,7 @@ public class Main {
 
         // Affichage //
 
-        // Affichage du message de bievenu
+        // Affichage du message de bienvenue
         afficherMessageBievenue();
 
         do {
@@ -1202,9 +1204,9 @@ public class Main {
 
                         // Calcul des montants pour la facture
                         choixAssuranceLocataire = lireChoixAssurance();
-                        prixLocationParJour = calculerPrixLocation(typeVehiculeChoisi, grandeurVehiculeChoisi);
-                        prixAssuranceParJour = calculerPrixAssurance(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
-                        rabaisLocation = calculerRabaisLocation(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
+                        prixLocationParJour = calculerPrixLocationQuotidien(typeVehiculeChoisi, grandeurVehiculeChoisi);
+                        prixAssuranceParJour = calculerPrixAssuranceQuotidien(typeVehiculeChoisi, grandeurVehiculeChoisi, choixAssuranceLocataire);
+                        rabaisLocation = calculerRabaisLocationQuotidien(prixLocationParJour, typeVehiculeChoisi, grandeurVehiculeChoisi, jourLocation);
                         montantLocation = calculerMontantLocation(jourLocation, prixLocationParJour, rabaisLocation);
                         montantAssurance = calculerMontantAssurance(jourLocation, prixAssuranceParJour);
                         sousTotalLocation = calculerSousTotal(montantLocation, montantAssurance);
